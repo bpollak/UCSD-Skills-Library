@@ -1,0 +1,10 @@
+[
+  {
+    "name": "ucsd-accessibility-review",
+    "description": "Review UC San Diego web pages, documents, and app screens for common accessibility issues and WCAG-aligned remediation steps."
+  },
+  {
+    "name": "ucsd-brand-review",
+    "description": "Check UC San Diego websites, emails, and visual materials against UCSD brand guidance for colors, logos, typography, and tone."
+  }
+]
