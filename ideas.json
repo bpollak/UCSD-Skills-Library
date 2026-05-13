@@ -36,5 +36,29 @@
       "published": false
     },
     "links": []
+  },
+  {
+    "id": "tritonai-feedback",
+    "name": "tritonai-feedback",
+    "title": "TritonAI Feedback",
+    "description": "Collect feedback, bug reports, support requests, and improvement ideas from coding-agent users, then draft or send them to tritonai@ucsd.edu with confirmation.",
+    "category": "Feedback",
+    "status": "done",
+    "publicationStatus": "draft",
+    "owner": "AI Tools",
+    "updated": "2026-05-13",
+    "checklist": {
+      "definition": true,
+      "skillDraft": true,
+      "references": false,
+      "reviewed": true,
+      "published": false
+    },
+    "links": [
+      {
+        "label": "Skill",
+        "url": "skills/tritonai-feedback/SKILL.md"
+      }
+    ]
   }
 ]
