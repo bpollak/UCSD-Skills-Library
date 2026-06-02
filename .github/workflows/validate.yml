@@ -1,0 +1,41 @@
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install validation deps
+        run: pip install --quiet pyyaml jsonschema
+
+      - name: Validate structure & catalog
+        run: python3 scripts/validate.py --ci
+
+      - name: Security scan (secret gate + advisory review)
+        run: python3 scripts/security_scan.py --ci
+
+  # Optional hardening: enable a dedicated secret scanner across full history.
+  # Free for public repos; for private repos a GITLEAKS_LICENSE secret is required.
+  #
+  # secret-scan:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with: { fetch-depth: 0 }
+  #     - uses: gitleaks/gitleaks-action@v2
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         # GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}

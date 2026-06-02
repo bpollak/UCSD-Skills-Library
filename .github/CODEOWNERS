@@ -1,0 +1,16 @@
+# Code owners — used to auto-request reviews on pull requests.
+# Replace/extend the handles below with your team and a security reviewer group.
+
+# Default owner for everything in the repo.
+*                       @dbalders
+
+# Catalog, schema, and build tooling — maintainers.
+/ideas.json             @dbalders
+/schema/                @dbalders
+/scripts/               @dbalders
+/.github/               @dbalders
+
+# Anything that ships executable code requires a SECURITY review.
+# Point this at a security team once one exists, e.g. @org/security.
+/skills/**/scripts/     @dbalders
+/skills/**/assets/      @dbalders

@@ -7,6 +7,7 @@
     "category": "Compliance",
     "status": "in-progress",
     "publicationStatus": "draft",
+    "tier": "core",
     "owner": "AI Tools",
     "updated": "2026-05-08",
     "checklist": {
@@ -26,6 +27,7 @@
     "category": "Brand",
     "status": "in-progress",
     "publicationStatus": "draft",
+    "tier": "core",
     "owner": "AI Tools",
     "updated": "2026-05-08",
     "checklist": {
@@ -45,6 +47,7 @@
     "category": "Feedback",
     "status": "done",
     "publicationStatus": "draft",
+    "tier": "core",
     "owner": "AI Tools",
     "updated": "2026-05-13",
     "checklist": {
@@ -69,6 +72,7 @@
     "category": "Security",
     "status": "in-progress",
     "publicationStatus": "draft",
+    "tier": "core",
     "owner": "AI Tools",
     "updated": "2026-06-02",
     "checklist": {
