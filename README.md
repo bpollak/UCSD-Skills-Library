@@ -28,3 +28,31 @@ Skills can also include optional `references/`, `scripts/`, and `assets/` folder
 ## Installing a Skill
 
 Copy or symlink a skill folder into the agent's skills directory, such as `~/.agents/skills/`.
+
+## Trust Tiers
+
+Every skill carries a `tier` in `ideas.json` so users can calibrate trust:
+
+- **core** — team-built and fully vetted (the default surface)
+- **verified** — community-contributed, reviewed, and CI-green
+- **experimental** — clearly labeled, use-at-your-own-risk
+
+See [GOVERNANCE.md](GOVERNANCE.md) for how tiers are assigned.
+
+## Contributing
+
+Contribution is open; publication is reviewed. Propose a skill in `ideas.json`, build it
+from [`skills/_template/`](skills/_template/), and open a PR. See
+[CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+
+## Validation
+
+CI validates every PR. Run the same checks locally:
+
+```sh
+pip install pyyaml jsonschema
+python3 scripts/validate.py        # structure, schema, catalog, trigger collisions
+python3 scripts/security_scan.py   # secret gate + advisory security review
+```
+
+`ideas.json` is validated against [`schema/ideas.schema.json`](schema/ideas.schema.json).
