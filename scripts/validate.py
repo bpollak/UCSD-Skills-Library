@@ -1,145 +1,381 @@
 #!/usr/bin/env python3
-"""Structural + catalog validation for the UCSD Skills Library.
+"""Validate the UCSD skills catalog and skill folders."""
 
-Checks (hard failures unless noted):
-  - ideas.json is valid JSON and matches schema/ideas.schema.json
-  - every skills/<name>/ has a SKILL.md with frontmatter `name` (== folder) + `description`
-  - built skills are reflected in the catalog, and `done` catalog entries have folders
-  - trigger collisions across skill descriptions (advisory warning)
+from __future__ import annotations
 
-Run locally:  python3 scripts/validate.py
-Optional deps for full coverage:  pip install pyyaml jsonschema
-Folders under skills/ starting with "_" (e.g. _template) are ignored.
-"""
 import json
 import re
 import sys
 from pathlib import Path
-
-ROOT = Path(__file__).resolve().parent.parent
-errors: list[str] = []
-warnings: list[str] = []
+from typing import Any
 
 
-def err(m: str) -> None:
-    errors.append(m)
+ROOT = Path(__file__).resolve().parents[1]
+IDEAS_PATH = ROOT / "ideas.json"
+CATEGORIES_PATH = ROOT / "categories.json"
+SCHEMA_PATH = ROOT / "schema" / "ideas.schema.json"
+SKILLS_DIR = ROOT / "skills"
+
+NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+VALID_STATUSES = {"planned", "idea", "in-progress", "review", "done", "built"}
+VALID_PUBLICATION_STATUSES = {"draft", "ready", "published", "archived"}
+VALID_TIERS = {"core", "verified", "experimental"}
+BUILT_STATUSES = {"done", "built"}
+REQUIRED_IDEA_FIELDS = {
+    "id",
+    "name",
+    "title",
+    "description",
+    "category",
+    "status",
+    "publicationStatus",
+    "tier",
+    "owner",
+    "updated",
+    "checklist",
+    "links",
+}
+REQUIRED_CHECKLIST_FIELDS = {"definition", "skillDraft", "references", "reviewed", "published"}
+REQUIRED_CATEGORY_FIELDS = {"id", "name", "description", "examples"}
 
 
-def warn(m: str) -> None:
-    warnings.append(m)
+def load_json(path: Path, errors: list[str]) -> Any:
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            return json.load(handle)
+    except FileNotFoundError:
+        errors.append(f"Missing required file: {path.relative_to(ROOT)}")
+    except json.JSONDecodeError as exc:
+        errors.append(
+            f"{path.relative_to(ROOT)} is not valid JSON: line {exc.lineno}, column {exc.colno}: {exc.msg}"
+        )
+    return None
 
 
-# --- 1. ideas.json: parse + schema ------------------------------------------
-ideas: list = []
-ideas_path = ROOT / "ideas.json"
-try:
-    ideas = json.loads(ideas_path.read_text())
-except Exception as e:  # noqa: BLE001
-    err(f"ideas.json: invalid JSON ({e})")
-
-try:
-    import jsonschema  # type: ignore
-
-    schema = json.loads((ROOT / "schema" / "ideas.schema.json").read_text())
-    validator = jsonschema.Draft202012Validator(schema)
-    for e in sorted(validator.iter_errors(ideas), key=lambda e: list(e.path)):
-        loc = "/".join(str(p) for p in e.path) or "(root)"
-        err(f"ideas.json[{loc}]: {e.message}")
-except ImportError:
-    warn("jsonschema not installed - skipping schema validation (pip install jsonschema)")
-except Exception as e:  # noqa: BLE001
-    err(f"ideas.json: schema validation failed ({e})")
-
-catalog = {e["name"]: e for e in ideas if isinstance(e, dict) and "name" in e}
-
-
-# --- 2. frontmatter parsing -------------------------------------------------
-def parse_frontmatter(text: str):
+def parse_frontmatter(path: Path, errors: list[str]) -> dict[str, str]:
+    text = path.read_text(encoding="utf-8")
     if not text.startswith("---"):
-        return None
+        errors.append(f"{path.relative_to(ROOT)} must start with YAML frontmatter")
+        return {}
+
     parts = text.split("---", 2)
     if len(parts) < 3:
-        return None
+        errors.append(f"{path.relative_to(ROOT)} has unterminated YAML frontmatter")
+        return {}
+
     body = parts[1]
     try:
         import yaml  # type: ignore
 
-        return yaml.safe_load(body) or {}
+        parsed = yaml.safe_load(body) or {}
+        if not isinstance(parsed, dict):
+            errors.append(f"{path.relative_to(ROOT)} frontmatter must be a mapping")
+            return {}
+        return {str(key): str(value) for key, value in parsed.items() if value is not None}
     except ImportError:
-        data = {}
+        data: dict[str, str] = {}
         for line in body.splitlines():
-            m = re.match(r"^([A-Za-z0-9_-]+):\s*(.*)$", line)
-            if m:
-                data[m.group(1)] = m.group(2).strip().strip("\"'")
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#") or line[:1].isspace():
+                continue
+            if ":" not in line:
+                errors.append(f"{path.relative_to(ROOT)} frontmatter line is not key/value: {line}")
+                continue
+            key, value = line.split(":", 1)
+            data[key.strip()] = value.strip().strip("\"'")
         return data
 
 
-# --- 3. each skill folder ---------------------------------------------------
-descriptions: dict[str, str] = {}
-skills_dir = ROOT / "skills"
-for d in sorted(p for p in skills_dir.iterdir() if p.is_dir()):
-    if d.name.startswith("_"):
-        continue  # template / internal
-    skill_md = d / "SKILL.md"
-    if not skill_md.exists():
-        err(f"skills/{d.name}: missing SKILL.md")
-        continue
-    fm = parse_frontmatter(skill_md.read_text())
-    if not fm:
-        err(f"skills/{d.name}/SKILL.md: missing or unparseable YAML frontmatter")
-        continue
-    name, desc = fm.get("name"), fm.get("description")
-    if not name:
-        err(f"skills/{d.name}/SKILL.md: frontmatter missing 'name'")
-    elif name != d.name:
-        err(f"skills/{d.name}/SKILL.md: name '{name}' must match folder '{d.name}'")
-    if not desc:
-        err(f"skills/{d.name}/SKILL.md: frontmatter missing 'description'")
-    else:
-        descriptions[d.name] = desc
-    if name and name not in catalog:
-        warn(f"skills/{d.name}: no matching entry in ideas.json")
+def skill_dirs() -> list[Path]:
+    if not SKILLS_DIR.exists():
+        return []
+    return sorted(
+        path
+        for path in SKILLS_DIR.iterdir()
+        if path.is_dir()
+        and not path.name.startswith(".")
+        and not path.name.startswith("_")
+        and (path / "SKILL.md").exists()
+    )
 
 
-# --- 4. catalog -> folder consistency ---------------------------------------
-for e in ideas:
-    if not isinstance(e, dict):
-        continue
-    name = e.get("name", "")
-    folder = skills_dir / name
-    links = e.get("links") or []
-    links_to_skill = any(str(l.get("url", "")).startswith("skills/") for l in links)
-    if e.get("status") == "done" and not folder.exists():
-        err(f"ideas.json: '{name}' is status=done but skills/{name}/ is missing")
-    if links_to_skill and not folder.exists():
-        err(f"ideas.json: '{name}' links to a skill but skills/{name}/ is missing")
+def validate_schema_file(errors: list[str]) -> None:
+    schema = load_json(SCHEMA_PATH, errors)
+    if schema is None:
+        return
+    if schema.get("type") != "array":
+        errors.append("schema/ideas.schema.json must describe an array catalog")
 
 
-# --- 5. trigger-collision (advisory) ----------------------------------------
-def triggers(desc: str) -> set[str]:
-    out = set(re.findall(r"/[a-z0-9][a-z0-9-]+", desc.lower()))  # slash-commands
-    out |= {q.strip().lower() for q in re.findall(r'"([^"]{3,})"', desc)}  # quoted phrases
-    return out
+def validate_categories(categories: Any, errors: list[str]) -> set[str]:
+    if not isinstance(categories, list):
+        errors.append("categories.json must contain a JSON array")
+        return set()
+
+    seen_ids: set[str] = set()
+    seen_names: set[str] = set()
+
+    for index, entry in enumerate(categories):
+        label = f"categories.json[{index}]"
+        if not isinstance(entry, dict):
+            errors.append(f"{label} must be an object")
+            continue
+
+        missing = sorted(REQUIRED_CATEGORY_FIELDS - set(entry))
+        if missing:
+            errors.append(f"{label} is missing required field(s): {', '.join(missing)}")
+
+        category_id = entry.get("id")
+        name = entry.get("name")
+
+        if not isinstance(category_id, str) or not category_id:
+            errors.append(f"{label}.id must be a non-empty string")
+        elif not NAME_RE.fullmatch(category_id):
+            errors.append(f"{label}.id must use lowercase letters, digits, and hyphens: {category_id}")
+        elif category_id in seen_ids:
+            errors.append(f"{label}.id is duplicated: {category_id}")
+        else:
+            seen_ids.add(category_id)
+
+        if not isinstance(name, str) or not name.strip():
+            errors.append(f"{label}.name must be a non-empty string")
+        elif name in seen_names:
+            errors.append(f"{label}.name is duplicated: {name}")
+        else:
+            seen_names.add(name)
+
+        description = entry.get("description")
+        if not isinstance(description, str) or not description.strip():
+            errors.append(f"{label}.description must be a non-empty string")
+
+        examples = entry.get("examples")
+        if not isinstance(examples, list) or not examples:
+            errors.append(f"{label}.examples must be a non-empty array")
+        elif not all(isinstance(example, str) and example.strip() for example in examples):
+            errors.append(f"{label}.examples must contain only non-empty strings")
+
+    return seen_names
 
 
-names = list(descriptions)
-for i in range(len(names)):
-    for j in range(i + 1, len(names)):
-        shared = triggers(descriptions[names[i]]) & triggers(descriptions[names[j]])
-        if shared:
-            warn(
-                f"trigger overlap between '{names[i]}' and '{names[j]}': "
-                + ", ".join(sorted(shared))
+def validate_schema(ideas: Any, errors: list[str], warnings: list[str]) -> None:
+    try:
+        import jsonschema  # type: ignore
+
+        schema = load_json(SCHEMA_PATH, errors)
+        if schema is None:
+            return
+        validator = jsonschema.Draft202012Validator(schema)
+        for error in sorted(validator.iter_errors(ideas), key=lambda item: list(item.path)):
+            location = "/".join(str(part) for part in error.path) or "(root)"
+            errors.append(f"ideas.json[{location}]: {error.message}")
+    except ImportError:
+        warnings.append("jsonschema not installed - skipping schema validation (pip install jsonschema)")
+
+
+def validate_links(label: str, links: Any, errors: list[str]) -> bool:
+    if not isinstance(links, list):
+        errors.append(f"{label}.links must be an array")
+        return False
+
+    links_to_skill = False
+    for link_index, link in enumerate(links):
+        link_label = f"{label}.links[{link_index}]"
+        if not isinstance(link, dict):
+            errors.append(f"{link_label} must be an object")
+            continue
+        if set(link) - {"label", "url"}:
+            extras = ", ".join(sorted(set(link) - {"label", "url"}))
+            errors.append(f"{link_label} has unsupported field(s): {extras}")
+        for field in ("label", "url"):
+            if not isinstance(link.get(field), str) or not link.get(field, "").strip():
+                errors.append(f"{link_label}.{field} must be a non-empty string")
+        url = str(link.get("url", ""))
+        links_to_skill = links_to_skill or url.startswith("skills/")
+
+    return links_to_skill
+
+
+def validate_ideas(ideas: Any, category_names: set[str], errors: list[str]) -> dict[str, dict[str, Any]]:
+    if not isinstance(ideas, list):
+        errors.append("ideas.json must contain a JSON array")
+        return {}
+
+    by_name: dict[str, dict[str, Any]] = {}
+    seen_ids: set[str] = set()
+    seen_names: set[str] = set()
+
+    for index, entry in enumerate(ideas):
+        label = f"ideas.json[{index}]"
+        if not isinstance(entry, dict):
+            errors.append(f"{label} must be an object")
+            continue
+
+        missing = sorted(REQUIRED_IDEA_FIELDS - set(entry))
+        if missing:
+            errors.append(f"{label} is missing required field(s): {', '.join(missing)}")
+
+        extra = sorted(set(entry) - REQUIRED_IDEA_FIELDS)
+        if extra:
+            errors.append(f"{label} has unsupported field(s): {', '.join(extra)}")
+
+        idea_id = entry.get("id")
+        name = entry.get("name")
+
+        if not isinstance(idea_id, str) or not idea_id:
+            errors.append(f"{label}.id must be a non-empty string")
+        elif not NAME_RE.fullmatch(idea_id):
+            errors.append(f"{label}.id must use lowercase letters, digits, and hyphens: {idea_id}")
+        elif idea_id in seen_ids:
+            errors.append(f"{label}.id is duplicated: {idea_id}")
+        else:
+            seen_ids.add(idea_id)
+
+        if not isinstance(name, str) or not name:
+            errors.append(f"{label}.name must be a non-empty string")
+        elif not NAME_RE.fullmatch(name):
+            errors.append(f"{label}.name must use lowercase letters, digits, and hyphens: {name}")
+        elif name in seen_names:
+            errors.append(f"{label}.name is duplicated: {name}")
+        else:
+            seen_names.add(name)
+            by_name[name] = entry
+
+        if isinstance(idea_id, str) and isinstance(name, str) and idea_id != name:
+            errors.append(f"{label}.id and .name must match: {idea_id} != {name}")
+
+        for field in ("title", "description", "owner"):
+            if not isinstance(entry.get(field), str) or not entry.get(field, "").strip():
+                errors.append(f"{label}.{field} must be a non-empty string")
+
+        category = entry.get("category")
+        if not isinstance(category, str) or not category.strip():
+            errors.append(f"{label}.category must be a non-empty string")
+        elif category_names and category not in category_names:
+            errors.append(f"{label}.category must match a category in categories.json: {category}")
+
+        status = entry.get("status")
+        if status not in VALID_STATUSES:
+            errors.append(f"{label}.status must be one of {', '.join(sorted(VALID_STATUSES))}: {status}")
+
+        publication_status = entry.get("publicationStatus")
+        if publication_status not in VALID_PUBLICATION_STATUSES:
+            errors.append(
+                f"{label}.publicationStatus must be one of "
+                f"{', '.join(sorted(VALID_PUBLICATION_STATUSES))}: {publication_status}"
             )
 
+        tier = entry.get("tier")
+        if tier not in VALID_TIERS:
+            errors.append(f"{label}.tier must be one of {', '.join(sorted(VALID_TIERS))}: {tier}")
 
-# --- report -----------------------------------------------------------------
-for w in warnings:
-    print(f"::warning:: {w}" if "--ci" in sys.argv else f"WARN  {w}")
-for e in errors:
-    print(f"::error:: {e}" if "--ci" in sys.argv else f"ERROR {e}")
+        updated = entry.get("updated")
+        if not isinstance(updated, str) or not DATE_RE.fullmatch(updated):
+            errors.append(f"{label}.updated must use YYYY-MM-DD format")
 
-if errors:
-    print(f"\nvalidate: FAILED with {len(errors)} error(s), {len(warnings)} warning(s)")
-    sys.exit(1)
-print(f"validate: OK ({len(warnings)} warning(s))")
+        checklist = entry.get("checklist")
+        if not isinstance(checklist, dict):
+            errors.append(f"{label}.checklist must be an object")
+        else:
+            missing_checklist = sorted(REQUIRED_CHECKLIST_FIELDS - set(checklist))
+            if missing_checklist:
+                errors.append(
+                    f"{label}.checklist is missing required field(s): {', '.join(missing_checklist)}"
+                )
+            extra_checklist = sorted(set(checklist) - REQUIRED_CHECKLIST_FIELDS)
+            if extra_checklist:
+                errors.append(
+                    f"{label}.checklist has unsupported field(s): {', '.join(extra_checklist)}"
+                )
+            for key, value in checklist.items():
+                if not isinstance(value, bool):
+                    errors.append(f"{label}.checklist.{key} must be boolean")
+
+        links_to_skill = validate_links(label, entry.get("links"), errors)
+        folder = SKILLS_DIR / str(name)
+        if status in BUILT_STATUSES and not folder.exists():
+            errors.append(f"{label} is status={status} but skills/{name}/ is missing")
+        if links_to_skill and not folder.exists():
+            errors.append(f"{label} links to a skill but skills/{name}/ is missing")
+
+    return by_name
+
+
+def validate_skill_folders(catalog: dict[str, dict[str, Any]], errors: list[str]) -> dict[str, str]:
+    descriptions: dict[str, str] = {}
+    for directory in skill_dirs():
+        name = directory.name
+        if not NAME_RE.fullmatch(name):
+            errors.append(f"skills/{name} must use lowercase letters, digits, and hyphens")
+
+        skill_md = directory / "SKILL.md"
+        frontmatter = parse_frontmatter(skill_md, errors)
+        frontmatter_name = frontmatter.get("name")
+        description = frontmatter.get("description")
+
+        if not frontmatter_name:
+            errors.append(f"skills/{name}/SKILL.md frontmatter missing 'name'")
+        elif frontmatter_name != name:
+            errors.append(
+                f"skills/{name}/SKILL.md frontmatter name '{frontmatter_name}' must match folder '{name}'"
+            )
+
+        if not description:
+            errors.append(f"skills/{name}/SKILL.md frontmatter missing 'description'")
+        else:
+            descriptions[name] = description
+
+        if name not in catalog:
+            errors.append(f"skills/{name} has no matching entry in ideas.json")
+
+    return descriptions
+
+
+def trigger_tokens(description: str) -> set[str]:
+    tokens = set(re.findall(r"/[a-z0-9][a-z0-9-]+", description.lower()))
+    tokens |= {phrase.strip().lower() for phrase in re.findall(r'"([^"]{3,})"', description)}
+    return tokens
+
+
+def validate_trigger_collisions(descriptions: dict[str, str], warnings: list[str]) -> None:
+    names = list(descriptions)
+    for left_index, left_name in enumerate(names):
+        for right_name in names[left_index + 1 :]:
+            shared = trigger_tokens(descriptions[left_name]) & trigger_tokens(descriptions[right_name])
+            if shared:
+                warnings.append(
+                    f"trigger overlap between '{left_name}' and '{right_name}': "
+                    + ", ".join(sorted(shared))
+                )
+
+
+def main() -> int:
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    validate_schema_file(errors)
+    categories = load_json(CATEGORIES_PATH, errors)
+    ideas = load_json(IDEAS_PATH, errors)
+
+    category_names = validate_categories(categories, errors) if categories is not None else set()
+    validate_schema(ideas, errors, warnings) if ideas is not None else None
+    catalog = validate_ideas(ideas, category_names, errors) if ideas is not None else {}
+    descriptions = validate_skill_folders(catalog, errors)
+    validate_trigger_collisions(descriptions, warnings)
+
+    ci = "--ci" in sys.argv
+    for warning in warnings:
+        print(f"::warning:: {warning}" if ci else f"WARN  {warning}")
+    for error in errors:
+        print(f"::error:: {error}" if ci else f"ERROR {error}")
+
+    if errors:
+        print(f"\nvalidate: FAILED with {len(errors)} error(s), {len(warnings)} warning(s)")
+        return 1
+
+    print(f"validate: OK ({len(warnings)} warning(s))")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

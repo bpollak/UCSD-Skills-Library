@@ -1,50 +1,10 @@
 [
   {
-    "id": "ucsd-accessibility-review",
-    "name": "ucsd-accessibility-review",
-    "title": "UCSD Accessibility Review",
-    "description": "Review UC San Diego web pages, documents, and app screens for common accessibility issues and WCAG-aligned remediation steps.",
-    "category": "Compliance",
-    "status": "in-progress",
-    "publicationStatus": "draft",
-    "tier": "core",
-    "owner": "AI Tools",
-    "updated": "2026-05-08",
-    "checklist": {
-      "definition": true,
-      "skillDraft": true,
-      "references": false,
-      "reviewed": false,
-      "published": false
-    },
-    "links": []
-  },
-  {
-    "id": "ucsd-brand-review",
-    "name": "ucsd-brand-review",
-    "title": "UCSD Brand Review",
-    "description": "Check UC San Diego websites, emails, and visual materials against UCSD brand guidance for colors, logos, typography, and tone.",
-    "category": "Brand",
-    "status": "in-progress",
-    "publicationStatus": "draft",
-    "tier": "core",
-    "owner": "AI Tools",
-    "updated": "2026-05-08",
-    "checklist": {
-      "definition": true,
-      "skillDraft": true,
-      "references": false,
-      "reviewed": false,
-      "published": false
-    },
-    "links": []
-  },
-  {
     "id": "tritonai-feedback",
     "name": "tritonai-feedback",
     "title": "TritonAI Feedback",
     "description": "Collect feedback, bug reports, support requests, and improvement ideas from coding-agent users, then draft or send them to tritonai@ucsd.edu with confirmation.",
-    "category": "Feedback",
+    "category": "Campus AI Tools",
     "status": "done",
     "publicationStatus": "draft",
     "tier": "core",
@@ -68,8 +28,8 @@
     "id": "ucsd-data-classification",
     "name": "ucsd-data-classification",
     "title": "UCSD Data Classification & Handling",
-    "description": "Classify data in UC San Diego apps, automations, and pipelines under UC IS-3 Protection Levels (P1–P4) and apply the required handling controls — catching issues like SSNs in unprotected paths, PII in logs, or unencrypted P4 storage.",
-    "category": "Security",
+    "description": "Classify data in UC San Diego apps, automations, and pipelines under UC IS-3 Protection Levels (P1-P4) and apply required handling controls, catching issues like SSNs in unprotected paths, PII in logs, or unencrypted P4 storage.",
+    "category": "Security & Data Protection",
     "status": "in-progress",
     "publicationStatus": "draft",
     "tier": "core",

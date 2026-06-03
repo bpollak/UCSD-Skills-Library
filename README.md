@@ -25,25 +25,31 @@ skills/example-skill/
 
 Skills can also include optional `references/`, `scripts/`, and `assets/` folders when the workflow needs them.
 
-## Installing a Skill
+Use `skills/_template/` when starting a new skill.
 
-Copy or symlink a skill folder into the agent's skills directory, such as `~/.agents/skills/`.
+## Catalog
 
-## Trust Tiers
+`ideas.json` is the source of truth for skill metadata. Categories live in `categories.json` and are used by the dashboard. Every catalog entry also carries a trust `tier`:
 
-Every skill carries a `tier` in `ideas.json` so users can calibrate trust:
-
-- **core** — team-built and fully vetted (the default surface)
-- **verified** — community-contributed, reviewed, and CI-green
-- **experimental** — clearly labeled, use-at-your-own-risk
+- **core** - team-built and fully vetted
+- **verified** - community-contributed, reviewed, and CI-green
+- **experimental** - clearly labeled, use-at-your-own-risk
 
 See [GOVERNANCE.md](GOVERNANCE.md) for how tiers are assigned.
 
+## Installing a Skill
+
+Install the built UCSD skills with one command:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/dbalders/UCSD-Skills-Library/main/scripts/install-skills.sh | GROUP="built" bash
+```
+
+The installer copies built skill folders into `~/.agents/skills/` by default. To install a specific skill, pass `SKILLS="tritonai-feedback"` instead of `GROUP`.
+
 ## Contributing
 
-Contribution is open; publication is reviewed. Propose a skill in `ideas.json`, build it
-from [`skills/_template/`](skills/_template/), and open a PR. See
-[CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+Contribution is open; publication is reviewed. Propose a skill in `ideas.json`, build it from [`skills/_template/`](skills/_template/), and open a PR. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
 ## Validation
 
@@ -51,7 +57,7 @@ CI validates every PR. Run the same checks locally:
 
 ```sh
 pip install pyyaml jsonschema
-python3 scripts/validate.py        # structure, schema, catalog, trigger collisions
+python3 scripts/validate.py        # structure, schema, categories, catalog, trigger collisions
 python3 scripts/security_scan.py   # secret gate + advisory security review
 ```
 
