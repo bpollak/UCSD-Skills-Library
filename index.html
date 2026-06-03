@@ -7,19 +7,19 @@
   <style>
     :root {
       --navy: #061b34;
+      --navy-2: #072b52;
       --blue: #00629b;
-      --blue-2: #0b5cab;
       --gold: #ffcd00;
-      --ink: #152238;
-      --muted: #657287;
-      --line: #d9e0ea;
+      --gold-dark: #d7a300;
+      --ink: #13233a;
+      --muted: #667085;
+      --line: #d8dee8;
       --line-soft: #edf1f6;
-      --bg: #f6f8fb;
       --surface: #ffffff;
-      --green: #18865a;
-      --amber: #b77900;
-      --red: #b42318;
-      --shadow: 0 18px 45px rgba(6, 27, 52, 0.08);
+      --bg: #fbfcfe;
+      --green: #147a4d;
+      --amber: #a46100;
+      --shadow: 0 16px 36px rgba(6, 27, 52, 0.07);
     }
 
     * {
@@ -31,253 +31,359 @@
       color: var(--ink);
       background: var(--bg);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     button,
     input,
-    select {
+    select,
+    textarea {
       font: inherit;
     }
 
-    .app {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
+    button {
+      cursor: pointer;
     }
 
-    .sidebar {
-      background: var(--navy);
+    .topbar {
+      min-height: 78px;
+      padding: 16px clamp(18px, 3vw, 38px);
       color: #fff;
-      padding: 24px 18px;
+      background: linear-gradient(180deg, var(--navy-2), var(--navy));
       display: flex;
-      flex-direction: column;
-      gap: 24px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 0 4px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      gap: 18px;
+      min-width: 0;
     }
 
-    .mark {
-      width: 36px;
-      height: 36px;
-      border: 1px solid rgba(255, 255, 255, 0.38);
-      display: grid;
-      place-items: center;
-      color: var(--gold);
+    .wordmark {
+      color: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(25px, 3vw, 37px);
+      line-height: 1;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .wordmark::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -6px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 34px;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .site-title {
+      font-size: clamp(20px, 2vw, 29px);
       font-weight: 800;
       letter-spacing: 0;
-    }
-
-    .brand strong {
-      display: block;
-      font-size: 15px;
-      letter-spacing: 0;
-    }
-
-    .brand span {
-      display: block;
-      margin-top: 2px;
-      color: rgba(255, 255, 255, 0.68);
-      font-size: 12px;
-    }
-
-    .nav-section {
-      display: grid;
-      gap: 10px;
-    }
-
-    .nav-title {
-      color: rgba(255, 255, 255, 0.62);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .filter-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 7px;
-      padding: 10px 12px;
-      color: rgba(255, 255, 255, 0.78);
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-    }
-
-    .filter-btn:hover,
-    .filter-btn.active {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .filter-btn.active {
-      box-shadow: inset 3px 0 0 var(--gold);
-    }
-
-    .filter-count {
-      color: rgba(255, 255, 255, 0.62);
-      font-size: 12px;
-    }
-
-    .main {
-      min-width: 0;
-      display: grid;
-      grid-template-rows: auto auto minmax(0, 1fr);
-    }
-
-    .topbar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--line);
-      padding: 18px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    h1 {
-      margin: 0;
-      color: var(--navy);
-      font-size: clamp(24px, 3vw, 34px);
-      line-height: 1.1;
-      letter-spacing: 0;
-    }
-
-    .subhead {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      max-width: 780px;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      white-space: nowrap;
     }
 
     .search {
-      width: min(360px, 34vw);
+      width: min(380px, 34vw);
       border: 1px solid var(--line);
       border-radius: 7px;
       background: #fff;
-      padding: 10px 12px;
       color: var(--ink);
-    }
-
-    .select {
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: #fff;
-      padding: 10px 34px 10px 12px;
-      color: var(--ink);
-    }
-
-    .metrics {
-      padding: 20px 28px 0;
-      display: grid;
-      grid-template-columns: repeat(5, minmax(130px, 1fr));
-      gap: 12px;
-    }
-
-    .metric {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 15px;
+      padding: 12px 14px;
       box-shadow: 0 1px 1px rgba(6, 27, 52, 0.02);
     }
 
-    .metric span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+    .wrap {
+      width: min(1480px, 100%);
+      margin: 0 auto;
+      padding: 34px clamp(18px, 3vw, 38px) 36px;
     }
 
-    .metric strong {
-      display: block;
-      margin-top: 8px;
+    .storefront {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.88fr) minmax(420px, 1.12fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    h1 {
+      margin: 0 0 16px;
       color: var(--navy);
-      font-size: 28px;
+      font-size: clamp(29px, 3.2vw, 42px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .pack-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .pack-card {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 20px 22px;
+      text-align: left;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      box-shadow: 0 1px 1px rgba(6, 27, 52, 0.02);
+    }
+
+    .pack-card:hover,
+    .pack-card.active {
+      border-color: var(--blue);
+      box-shadow: inset 3px 0 0 var(--blue), 0 12px 28px rgba(6, 27, 52, 0.07);
+    }
+
+    .pack-card strong {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--navy);
+      font-size: clamp(23px, 2.4vw, 29px);
       line-height: 1;
     }
 
-    .content {
-      min-height: 0;
-      padding: 20px 28px 28px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
-      gap: 18px;
+    .pack-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      background: #edf5ff;
+      color: var(--blue);
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
     }
 
-    .panel {
-      min-width: 0;
-      background: var(--surface);
+    .pack-card.active .pack-icon,
+    .pack-card:hover .pack-icon {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .pack-icon svg {
+      width: 17px;
+      height: 17px;
+      display: block;
+    }
+
+    .count {
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: #e9f2ff;
+      color: #064f92;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .pack-card p {
+      margin: 10px 0 0;
+      color: #3c4a5e;
+      font-size: 15px;
+    }
+
+    .chevron {
+      color: var(--navy);
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .install-panel {
       border: 1px solid var(--line);
       border-radius: 8px;
+      background: var(--surface);
+      padding: clamp(18px, 2vw, 24px);
       box-shadow: var(--shadow);
+    }
+
+    .install-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(23px, 2.1vw, 28px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    label,
+    .field-label {
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .select {
+      width: 100%;
+      border: 1px solid #c7cfdb;
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      padding: 12px 14px;
+    }
+
+    .output-tabs {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      overflow: hidden;
+      background: #fff;
+      margin-bottom: 6px;
+    }
+
+    .tab {
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: #fff;
+      color: var(--navy);
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tab:last-child {
+      border-right: 0;
+    }
+
+    .tab.active {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .copybox {
+      width: 100%;
+      min-height: 104px;
+      resize: vertical;
+      border: 1px solid #c7cfdb;
+      border-radius: 7px;
+      background: #f8fafc;
+      color: #0f2138;
+      padding: 11px 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 7px;
+      padding: 10px 16px;
+      font-weight: 850;
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, var(--gold), #ebb000);
+      border-color: var(--gold-dark);
+      color: #07182b;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      border-color: var(--line);
+      color: var(--navy);
+    }
+
+    .feedback {
+      min-height: 16px;
+      margin-top: 8px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .catalog {
+      margin-top: 28px;
+    }
+
+    .catalog-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .skill-table {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
       overflow: hidden;
     }
 
-    .panel-head {
-      padding: 16px 18px;
+    .table-row {
+      min-height: 58px;
       border-bottom: 1px solid var(--line-soft);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .panel-head h2 {
-      margin: 0;
-      color: var(--navy);
-      font-size: 16px;
-    }
-
-    .panel-note {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .skill-list {
       display: grid;
-    }
-
-    .skill-row {
-      width: 100%;
-      border: 0;
-      border-bottom: 1px solid var(--line-soft);
-      background: #fff;
-      color: var(--ink);
-      padding: 15px 18px;
-      display: grid;
-      grid-template-columns: minmax(180px, 1fr) 150px 130px 130px;
+      grid-template-columns: minmax(220px, 0.95fr) minmax(260px, 1.4fr) minmax(150px, 0.75fr) 110px;
       gap: 16px;
-      text-align: left;
-      cursor: pointer;
+      align-items: center;
+      padding: 13px 14px;
     }
 
-    .skill-row:hover,
-    .skill-row.active {
-      background: #f1f7fc;
+    .table-row:last-child {
+      border-bottom: 0;
     }
 
-    .skill-row.active {
-      box-shadow: inset 3px 0 0 var(--blue);
+    .table-head {
+      min-height: 44px;
+      color: #344054;
+      background: #fbfcfe;
+      font-size: 13px;
+      font-weight: 850;
     }
 
     .skill-title {
@@ -293,341 +399,224 @@
       text-overflow: ellipsis;
     }
 
-    .skill-title span,
-    .cell-muted {
+    .skill-title span {
       display: block;
-      margin-top: 4px;
+      margin-top: 3px;
       color: var(--muted);
       font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .status {
+    .description {
+      color: #344054;
+      font-size: 13px;
+    }
+
+    .pill {
       width: max-content;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
+      max-width: 100%;
       border-radius: 999px;
       padding: 5px 9px;
-      background: #eef3f8;
-      color: var(--ink);
+      background: #eef4ff;
+      color: #064f92;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: capitalize;
+      white-space: nowrap;
     }
 
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--muted);
+    .pill.optional {
+      background: #eaf8ef;
+      color: var(--green);
     }
 
-    .status[data-tone="in-progress"] .dot {
-      background: var(--amber);
+    .small-copy {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--navy);
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
     }
 
-    .status[data-tone="done"] .dot,
-    .status[data-tone="published"] .dot {
-      background: var(--green);
+    .copy-cell {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
     }
 
-    .status[data-tone="planned"] .dot,
-    .status[data-tone="draft"] .dot {
-      background: var(--blue-2);
+    .copy-pop {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 7px);
+      border-radius: 7px;
+      background: var(--navy);
+      color: #fff;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1;
+      box-shadow: 0 10px 20px rgba(6, 27, 52, 0.16);
+      pointer-events: none;
+      white-space: nowrap;
     }
 
     .empty {
-      padding: 34px 18px;
+      padding: 24px;
       color: var(--muted);
       text-align: center;
     }
 
-    .detail {
-      min-height: 0;
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
-    }
-
-    .detail-body {
-      min-height: 0;
-      padding: 18px;
-      overflow: auto;
-      display: grid;
-      gap: 18px;
-      align-content: start;
-    }
-
-    .detail h3 {
-      margin: 0;
-      color: var(--navy);
-      font-size: 22px;
-      line-height: 1.18;
-    }
-
-    .description {
-      margin: 10px 0 0;
-      color: #3d4a5c;
-      font-size: 14px;
-    }
-
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .meta {
-      border: 1px solid var(--line-soft);
-      border-radius: 7px;
-      padding: 10px;
-      background: #fbfcfe;
-    }
-
-    .meta span {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .meta strong {
-      display: block;
-      margin-top: 5px;
-      color: var(--navy);
-      font-size: 13px;
-      overflow-wrap: anywhere;
-    }
-
-    .checklist {
-      display: grid;
-      gap: 9px;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      color: #334155;
-      font-size: 13px;
-    }
-
-    .check-item span:first-child {
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .check-pill {
-      flex: 0 0 auto;
-      border-radius: 999px;
-      padding: 3px 8px;
-      background: #f8e9e7;
-      color: var(--red);
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .check-pill.done {
-      background: #e8f6ef;
-      color: var(--green);
-    }
-
-    .raw {
-      max-height: 340px;
-      overflow: auto;
-      margin: 0;
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: #07182b;
-      color: #d5ecff;
-      padding: 14px;
-      font-size: 12px;
-      line-height: 1.55;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .section-title {
-      margin: 0 0 10px;
-      color: var(--navy);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .error {
-      margin: 20px 28px 0;
-      border: 1px solid #f3b8b0;
-      border-radius: 8px;
-      background: #fff7f6;
-      color: #8f1d14;
-      padding: 12px 14px;
-      font-size: 14px;
-    }
-
-    @media (max-width: 1100px) {
-      .app {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: static;
-        padding: 16px;
-      }
-
-      .nav-section {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .nav-title {
-        grid-column: 1 / -1;
-      }
-
-      .content {
-        grid-template-columns: 1fr;
-      }
-
-      .metrics {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 760px) {
+    @media (max-width: 980px) {
       .topbar {
-        align-items: stretch;
+        align-items: flex-start;
         flex-direction: column;
-        padding: 18px;
       }
 
-      .top-actions,
-      .search,
-      .select {
+      .storefront {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 720px) {
+      .brand {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .brand-divider {
+        display: none;
+      }
+
+      .site-title {
+        white-space: normal;
+      }
+
+      .install-head,
+      .catalog-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .search {
         width: 100%;
       }
 
-      .metrics,
-      .content {
-        padding-left: 18px;
-        padding-right: 18px;
-      }
-
-      .metrics {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .skill-row {
+      .table-row {
         grid-template-columns: 1fr;
         gap: 8px;
       }
 
-      .meta-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .nav-section {
-        grid-template-columns: 1fr 1fr;
+      .table-head {
+        display: none;
       }
 
-      .metrics {
-        grid-template-columns: 1fr;
+      .actions,
+      .btn {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar" aria-label="Skill filters">
-      <div class="brand">
-        <div class="mark" aria-hidden="true">UC</div>
-        <div>
-          <strong>UCSD Skills Library</strong>
-          <span>Skill publishing tracker</span>
-        </div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="wordmark">UC San Diego</div>
+      <div class="brand-divider" aria-hidden="true"></div>
+      <div class="site-title">Skills Library</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="storefront" aria-label="Skill pack installer">
+      <div>
+        <h1>Choose a skill pack</h1>
+        <div class="pack-list" id="pack-list"></div>
       </div>
 
-      <nav class="nav-section" aria-label="Status filters">
-        <div class="nav-title">Status</div>
-        <button class="filter-btn active" data-filter="all" type="button">All <span class="filter-count" id="count-all">0</span></button>
-        <button class="filter-btn" data-filter="planned" type="button">Planned <span class="filter-count" id="count-planned">0</span></button>
-        <button class="filter-btn" data-filter="in-progress" type="button">In progress <span class="filter-count" id="count-in-progress">0</span></button>
-        <button class="filter-btn" data-filter="done" type="button">Done <span class="filter-count" id="count-done">0</span></button>
-        <button class="filter-btn" data-filter="published" type="button">Published <span class="filter-count" id="count-published">0</span></button>
-      </nav>
+      <aside class="install-panel" aria-label="Install selected skills">
+        <div class="install-head">
+          <div>
+            <h2>Install skills</h2>
+          </div>
+        </div>
 
-      <nav class="nav-section" aria-label="Publication filters">
-        <div class="nav-title">Publication</div>
-        <button class="filter-btn" data-filter="draft" type="button">Draft <span class="filter-count" id="count-draft">0</span></button>
-        <button class="filter-btn" data-filter="review" type="button">Review <span class="filter-count" id="count-review">0</span></button>
-      </nav>
-    </aside>
+        <div class="field">
+          <div class="field-label">Copy option</div>
+          <div class="output-tabs" role="tablist" aria-label="Copy output type">
+            <button class="tab active" id="tab-script" data-output="script" type="button" role="tab" aria-selected="true">Install command</button>
+            <button class="tab" id="tab-prompt" data-output="prompt" type="button" role="tab" aria-selected="false">Harness prompt</button>
+          </div>
+          <textarea id="output" class="copybox" spellcheck="false" aria-label="Generated install output"></textarea>
+        </div>
 
-    <main class="main">
-      <header class="topbar">
+        <div class="actions">
+          <button class="btn btn-primary" id="copy-output" type="button">Copy install command</button>
+        </div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+      </aside>
+    </section>
+
+    <section class="catalog" aria-label="Current skills">
+      <div class="catalog-head">
         <div>
-          <h1>Skills overview</h1>
-          <p class="subhead">Read directly from <code>ideas.json</code>, with filters for pipeline status, publication state, and raw record inspection.</p>
+          <h3>Current skills</h3>
+          <p class="subtle" id="result-count">0 skills shown</p>
         </div>
-        <div class="top-actions">
-          <input id="search" class="search" type="search" placeholder="Search skills, categories, owners..." aria-label="Search skills">
-          <select id="category" class="select" aria-label="Filter by category">
-            <option value="all">All categories</option>
-          </select>
-        </div>
-      </header>
+        <input id="search" class="search" type="search" placeholder="Search skills..." aria-label="Search skills">
+      </div>
+      <div class="skill-table" id="skill-table"></div>
+    </section>
 
-      <section class="metrics" aria-label="Skill metrics">
-        <div class="metric"><span>Total skills</span><strong id="metric-total">0</strong></div>
-        <div class="metric"><span>In progress</span><strong id="metric-progress">0</strong></div>
-        <div class="metric"><span>Done</span><strong id="metric-done">0</strong></div>
-        <div class="metric"><span>Published</span><strong id="metric-published">0</strong></div>
-        <div class="metric"><span>Categories</span><strong id="metric-categories">0</strong></div>
-      </section>
-
-      <div id="error" class="error" hidden></div>
-
-      <section class="content">
-        <div class="panel">
-          <div class="panel-head">
-            <h2>Skill records</h2>
-            <span class="panel-note" id="result-count">0 shown</span>
-          </div>
-          <div class="skill-list" id="skill-list"></div>
-        </div>
-
-        <aside class="panel detail" aria-label="Selected skill details">
-          <div class="panel-head">
-            <h2>Record detail</h2>
-            <span class="panel-note" id="detail-source">ideas.json</span>
-          </div>
-          <div class="detail-body" id="detail"></div>
-        </aside>
-      </section>
-    </main>
-  </div>
+    <div id="error" class="empty" hidden></div>
+  </main>
 
   <script>
+    const PACKS = {
+      core: {
+        label: "Core",
+        title: "Core Skills",
+        icon: "box",
+        countLabel: "skills",
+        description: "Real markdown skills available to add to an agent now."
+      },
+      optional: {
+        label: "Drafts",
+        title: "Drafts & Ideas",
+        icon: "spark",
+        countLabel: "entries",
+        description: "In-progress skills and catalog-only ideas that are not default installs yet."
+      },
+      all: {
+        label: "All Entries",
+        title: "All Entries",
+        icon: "grid",
+        countLabel: "entries",
+        description: "Default installs plus drafts and catalog-only ideas."
+      }
+    };
+
     const state = {
       skills: [],
-      filtered: [],
-      activeFilter: "all",
-      selectedId: null,
-      search: "",
-      category: "all"
+      pack: "core",
+      outputType: "script",
+      search: ""
     };
 
     const els = {
-      list: document.querySelector("#skill-list"),
-      detail: document.querySelector("#detail"),
+      packList: document.querySelector("#pack-list"),
+      skillTable: document.querySelector("#skill-table"),
       resultCount: document.querySelector("#result-count"),
+      output: document.querySelector("#output"),
+      copyOutput: document.querySelector("#copy-output"),
+      feedback: document.querySelector("#feedback"),
       search: document.querySelector("#search"),
-      category: document.querySelector("#category"),
       error: document.querySelector("#error")
     };
 
@@ -635,20 +624,27 @@
       const name = skill.name || skill.id || `skill-${index + 1}`;
       const status = normalizeStatus(skill.status || skill.phase || "planned");
       const publicationStatus = normalizeStatus(skill.publicationStatus || skill.publication || (skill.published ? "published" : "draft"));
+      const links = Array.isArray(skill.links) ? skill.links : [];
 
       return {
         ...skill,
         id: skill.id || name,
         name,
         title: skill.title || titleCase(name),
+        description: skill.description || "No description provided.",
         category: skill.category || "Uncategorized",
         status,
         publicationStatus,
         owner: skill.owner || "Unassigned",
         updated: skill.updated || skill.lastUpdated || "",
-        checklist: skill.checklist || {},
-        links: Array.isArray(skill.links) ? skill.links : []
+        links,
+        skillPath: findSkillPath(links)
       };
+    }
+
+    function findSkillPath(links) {
+      const link = links.find((item) => String(item.url || item).includes("/SKILL.md"));
+      return link ? String(link.url || link).replace(/\/SKILL\.md$/, "") : "";
     }
 
     function normalizeStatus(value) {
@@ -666,177 +662,206 @@
         .replace(/\b\w/g, (letter) => letter.toUpperCase());
     }
 
-    function statusLabel(value) {
-      return String(value || "planned").replace(/-/g, " ");
+    function packFor(skill) {
+      return isDefaultInstall(skill) ? "core" : "optional";
     }
 
-    function matchesFilter(skill) {
-      if (state.activeFilter === "all") return true;
-      return skill.status === state.activeFilter || skill.publicationStatus === state.activeFilter;
+    function isDefaultInstall(skill) {
+      return Boolean(skill.skillPath) && ["done", "built"].includes(skill.status);
     }
 
-    function matchesSearch(skill) {
+    function skillsForPack(pack = state.pack) {
+      if (pack === "all") return state.skills;
+      return state.skills.filter((skill) => packFor(skill) === pack);
+    }
+
+    function visibleSkills() {
       const query = state.search.trim().toLowerCase();
-      if (!query) return true;
-
-      return [
-        skill.name,
-        skill.title,
-        skill.description,
-        skill.category,
-        skill.owner,
-        skill.status,
-        skill.publicationStatus
-      ].some((field) => String(field || "").toLowerCase().includes(query));
-    }
-
-    function matchesCategory(skill) {
-      return state.category === "all" || skill.category === state.category;
+      return skillsForPack().filter((skill) => {
+        if (!query) return true;
+        return [
+          skill.name,
+          skill.title,
+          skill.description,
+          skill.category,
+          skill.status,
+          skill.publicationStatus
+        ].some((field) => String(field || "").toLowerCase().includes(query));
+      });
     }
 
     function render() {
-      state.filtered = state.skills.filter((skill) => matchesFilter(skill) && matchesSearch(skill) && matchesCategory(skill));
-
-      if (!state.filtered.some((skill) => skill.id === state.selectedId)) {
-        state.selectedId = state.filtered[0]?.id || state.skills[0]?.id || null;
-      }
-
-      renderCounts();
-      renderCategoryOptions();
-      renderList();
-      renderDetail();
+      renderPacks();
+      renderInstall();
+      renderTable();
     }
 
-    function renderCounts() {
-      const counts = {
-        all: state.skills.length,
-        planned: countBy("status", "planned"),
-        "in-progress": countBy("status", "in-progress"),
-        done: countBy("status", "done"),
-        published: countBy("publicationStatus", "published"),
-        draft: countBy("publicationStatus", "draft"),
-        review: countBy("publicationStatus", "review")
-      };
+    function renderPacks() {
+      els.packList.innerHTML = Object.entries(PACKS).filter(([key]) => {
+        return key === "all" || skillsForPack(key).length > 0;
+      }).map(([key, pack]) => {
+        const count = skillsForPack(key).length;
+        return `
+          <button class="pack-card ${key === state.pack ? "active" : ""}" data-pack="${escapeAttr(key)}" type="button">
+            <span>
+              <strong>
+                <span class="pack-icon" aria-hidden="true">${packIcon(pack.icon)}</span>
+                ${escapeHtml(pack.title)}
+                <span class="count">${count} ${escapeHtml(pack.countLabel)}</span>
+              </strong>
+              <p>${escapeHtml(pack.description)}</p>
+            </span>
+            <span class="chevron" aria-hidden="true">›</span>
+          </button>
+        `;
+      }).join("");
+    }
 
-      Object.entries(counts).forEach(([key, value]) => {
-        const target = document.querySelector(`#count-${key}`);
-        if (target) target.textContent = value;
+    function packIcon(name) {
+      const attrs = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+      if (name === "grid") {
+        return `<svg ${attrs}><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>`;
+      }
+      if (name === "spark") {
+        return `<svg ${attrs}><path d="M12 3l1.7 4.4L18 9l-4.3 1.6L12 15l-1.7-4.4L6 9l4.3-1.6L12 3z"></path><path d="M19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14z"></path></svg>`;
+      }
+      return `<svg ${attrs}><path d="M21 8l-9-5-9 5 9 5 9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path><path d="M12 13v8"></path></svg>`;
+    }
+
+    function renderInstall() {
+      const selected = skillsForPack();
+      const ready = selected.filter(isDefaultInstall);
+
+      els.output.value = state.outputType === "script" ? buildScript(selected, ready) : buildPrompt(selected);
+      els.copyOutput.textContent = state.outputType === "script" ? "Copy install command" : "Copy harness prompt";
+    }
+
+    function buildScript(selected, ready) {
+      const installerUrl = "https://raw.githubusercontent.com/dbalders/UCSD-Skills-Library/main/scripts/install-skills.sh";
+      const skillNames = ready
+        .map((skill) => skill.name)
+        .join(" ");
+
+      if (!skillNames) return "# No default-install skills are available for this selection yet.";
+
+      if (ready.length === 1) return `curl -fsSL ${installerUrl} | SKILLS="${skillNames}" bash`;
+
+      return `curl -fsSL ${installerUrl} | GROUP="built" bash`;
+    }
+
+    function buildPrompt(selected) {
+      const repoPath = "/Users/davidbalderston/Github/UCSD/AI Tools/UCSD-Skills-Library";
+      const pack = PACKS[state.pack];
+      const lines = selected.map((skill) => {
+        const source = skill.skillPath ? skill.skillPath : `ideas.json entry: ${skill.id}`;
+        return `- ${skill.name}: ${source}`;
       });
 
-      document.querySelector("#metric-total").textContent = counts.all;
-      document.querySelector("#metric-progress").textContent = counts["in-progress"];
-      document.querySelector("#metric-done").textContent = counts.done;
-      document.querySelector("#metric-published").textContent = counts.published;
-      document.querySelector("#metric-categories").textContent = new Set(state.skills.map((skill) => skill.category)).size;
-      els.resultCount.textContent = `${state.filtered.length} shown`;
+      return [
+        "Add these UCSD Skills Library skills to this agent.",
+        "",
+        `Source repo: ${repoPath}`,
+        `Pack: ${pack.label}`,
+        "",
+        "Skills:",
+        lines.join("\n"),
+        "",
+        "Use the SKILL.md folder when present. For draft-only items, use the matching ideas.json entry as the source definition."
+      ].join("\n");
     }
 
-    function countBy(key, value) {
-      return state.skills.filter((skill) => skill[key] === value).length;
-    }
+    function renderTable() {
+      const rows = visibleSkills();
+      els.resultCount.textContent = `${rows.length} skill${rows.length === 1 ? "" : "s"} shown in ${PACKS[state.pack].label}`;
 
-    function renderCategoryOptions() {
-      const categories = [...new Set(state.skills.map((skill) => skill.category))].sort();
-      const currentOptions = [...els.category.options].map((option) => option.value).join("|");
-      const nextOptions = ["all", ...categories].join("|");
-
-      if (currentOptions === nextOptions) return;
-
-      els.category.innerHTML = "";
-      els.category.append(new Option("All categories", "all"));
-      categories.forEach((category) => els.category.append(new Option(category, category)));
-      els.category.value = state.category;
-    }
-
-    function renderList() {
-      if (!state.filtered.length) {
-        els.list.innerHTML = `<div class="empty">No skills match the current filters.</div>`;
+      if (!rows.length) {
+        els.skillTable.innerHTML = `<div class="empty">No skills match the current search.</div>`;
         return;
       }
 
-      els.list.innerHTML = state.filtered.map((skill) => `
-        <button class="skill-row ${skill.id === state.selectedId ? "active" : ""}" data-id="${escapeHtml(skill.id)}" type="button">
-          <span class="skill-title">
-            <strong>${escapeHtml(skill.title)}</strong>
-            <span>${escapeHtml(skill.name)}</span>
-          </span>
-          <span>
-            ${escapeHtml(skill.category)}
-            <span class="cell-muted">${escapeHtml(skill.owner)}</span>
-          </span>
-          ${statusBadge(skill.status)}
-          ${statusBadge(skill.publicationStatus)}
-        </button>
-      `).join("");
-    }
-
-    function renderDetail() {
-      const skill = state.skills.find((item) => item.id === state.selectedId);
-      if (!skill) {
-        els.detail.innerHTML = `<div class="empty">Select a skill to inspect its JSON record.</div>`;
-        return;
-      }
-
-      const checklistEntries = Object.entries(skill.checklist || {});
-      const links = Array.isArray(skill.links) ? skill.links : [];
-
-      els.detail.innerHTML = `
-        <section>
-          <h3>${escapeHtml(skill.title)}</h3>
-          <p class="description">${escapeHtml(skill.description || "No description provided.")}</p>
-        </section>
-
-        <section class="meta-grid" aria-label="Skill metadata">
-          ${meta("Status", statusLabel(skill.status))}
-          ${meta("Publication", statusLabel(skill.publicationStatus))}
-          ${meta("Category", skill.category)}
-          ${meta("Owner", skill.owner)}
-          ${meta("Updated", skill.updated || "Not set")}
-          ${meta("ID", skill.id)}
-        </section>
-
-        <section>
-          <p class="section-title">Checklist</p>
-          <div class="checklist">
-            ${checklistEntries.length ? checklistEntries.map(([key, value]) => checklistItem(key, value)).join("") : `<div class="cell-muted">No checklist fields yet.</div>`}
-          </div>
-        </section>
-
-        <section>
-          <p class="section-title">Links</p>
-          ${links.length ? links.map((link) => `<div><a href="${escapeAttr(link.url || link)}">${escapeHtml(link.label || link.url || link)}</a></div>`).join("") : `<div class="cell-muted">No links attached.</div>`}
-        </section>
-
-        <section>
-          <p class="section-title">Raw JSON</p>
-          <pre class="raw">${escapeHtml(JSON.stringify(skill, null, 2))}</pre>
-        </section>
-      `;
-    }
-
-    function meta(label, value) {
-      return `<div class="meta"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || "Not set")}</strong></div>`;
-    }
-
-    function checklistItem(key, value) {
-      const label = titleCase(key);
-      const done = Boolean(value);
-      return `
-        <div class="check-item">
-          <span>${escapeHtml(label)}</span>
-          <span class="check-pill ${done ? "done" : ""}">${done ? "Done" : "Open"}</span>
+      els.skillTable.innerHTML = `
+        <div class="table-row table-head">
+          <span>Skill</span>
+          <span>Description</span>
+          <span>Category</span>
+          <span></span>
         </div>
+        ${rows.map((skill) => `
+          <div class="table-row">
+            <div class="skill-title">
+              <strong>${escapeHtml(skill.title)}</strong>
+              <span>${escapeHtml(skill.name)}</span>
+            </div>
+            <div class="description">${escapeHtml(skill.description)}</div>
+            <div>
+              <span class="pill ${packFor(skill) === "optional" ? "optional" : ""}">${escapeHtml(skill.category)}</span>
+            </div>
+            <div class="copy-cell">
+              <button class="small-copy" data-skill="${escapeAttr(skill.id)}" type="button">Copy prompt</button>
+            </div>
+          </div>
+        `).join("")}
       `;
     }
 
-    function statusBadge(value) {
-      const tone = normalizeStatus(value);
-      return `
-        <span class="status" data-tone="${escapeAttr(tone)}">
-          <span class="dot" aria-hidden="true"></span>
-          ${escapeHtml(statusLabel(tone))}
-        </span>
-      `;
+    async function copyText(text, successMessage) {
+      if (await copyPlainText(text)) {
+        showFeedback(successMessage);
+        return;
+      }
+
+      els.output.focus();
+      els.output.select();
+      showFeedback("Select text and press Cmd+C to copy.");
+    }
+
+    async function copyPlainText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (error) {
+        const fallback = document.createElement("textarea");
+        fallback.value = text;
+        fallback.setAttribute("readonly", "");
+        fallback.style.position = "fixed";
+        fallback.style.left = "-9999px";
+        document.body.append(fallback);
+        fallback.select();
+
+        let copied = false;
+        try {
+          copied = document.execCommand("copy");
+        } catch (fallbackError) {
+          copied = false;
+        }
+
+        fallback.remove();
+        return copied;
+      }
+    }
+
+    function showFeedback(message) {
+      els.feedback.textContent = message;
+      clearTimeout(showFeedback.timer);
+      showFeedback.timer = setTimeout(() => {
+        els.feedback.textContent = "";
+      }, 2600);
+    }
+
+    function showRowCopied(button, message = "Copied") {
+      const cell = button.closest(".copy-cell");
+      if (!cell) return;
+      cell.querySelector(".copy-pop")?.remove();
+
+      const pop = document.createElement("span");
+      pop.className = "copy-pop";
+      pop.textContent = message;
+      cell.append(pop);
+
+      clearTimeout(button.copyTimer);
+      button.copyTimer = setTimeout(() => {
+        pop.remove();
+      }, 1400);
     }
 
     function escapeHtml(value) {
@@ -853,30 +878,42 @@
       return escapeHtml(value).replace(/`/g, "&#96;");
     }
 
-    document.querySelectorAll(".filter-btn").forEach((button) => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".filter-btn").forEach((item) => item.classList.remove("active"));
-        button.classList.add("active");
-        state.activeFilter = button.dataset.filter;
-        render();
+    els.packList.addEventListener("click", (event) => {
+      const button = event.target.closest(".pack-card");
+      if (!button) return;
+      state.pack = button.dataset.pack;
+      render();
+    });
+
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        state.outputType = tab.dataset.output;
+        document.querySelectorAll(".tab").forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", String(active));
+        });
+        renderInstall();
       });
     });
 
-    els.list.addEventListener("click", (event) => {
-      const row = event.target.closest(".skill-row");
-      if (!row) return;
-      state.selectedId = row.dataset.id;
-      render();
+    els.copyOutput.addEventListener("click", () => {
+      const label = state.outputType === "script" ? "Install command" : "Harness prompt";
+      copyText(els.output.value, `${label} copied.`);
     });
 
     els.search.addEventListener("input", () => {
       state.search = els.search.value;
-      render();
+      renderTable();
     });
 
-    els.category.addEventListener("change", () => {
-      state.category = els.category.value;
-      render();
+    els.skillTable.addEventListener("click", async (event) => {
+      const button = event.target.closest(".small-copy");
+      if (!button) return;
+      const skill = state.skills.find((item) => item.id === button.dataset.skill);
+      if (!skill) return;
+      await copyPlainText(buildPrompt([skill]));
+      showRowCopied(button);
     });
 
     async function loadSkills() {
@@ -888,7 +925,7 @@
       } catch (error) {
         state.skills = [];
         els.error.hidden = false;
-        els.error.textContent = "Could not load ideas.json. Serve this folder over HTTP to populate the dashboard.";
+        els.error.textContent = "Could not load ideas.json. Serve this folder over HTTP to populate the skills storefront.";
       }
       render();
     }
