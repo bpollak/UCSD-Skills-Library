@@ -42,10 +42,10 @@ See [GOVERNANCE.md](GOVERNANCE.md) for how tiers are assigned.
 Install the built UCSD skills with one command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dbalders/UCSD-Skills-Library/main/scripts/install-skills.sh | GROUP="built" bash
+curl -fsSL https://raw.githubusercontent.com/dbalders/UCSD-Skills-Library/main/scripts/install-skills.sh | GROUP="core" bash
 ```
 
-The installer copies built skill folders into `~/.agents/skills/` by default. To install a specific skill, pass `SKILLS="tritonai-feedback"` instead of `GROUP`.
+The installer copies skill folders into `~/.agents/skills/` by default. To install a specific skill, pass `SKILLS="tritonai-feedback"` instead of `GROUP`.
 
 ## Contributing
 

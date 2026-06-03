@@ -32,7 +32,7 @@
     "category": "Security & Data Protection",
     "status": "in-progress",
     "publicationStatus": "draft",
-    "tier": "core",
+    "tier": "experimental",
     "owner": "AI Tools",
     "updated": "2026-06-02",
     "checklist": {

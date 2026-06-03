@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UCSD Skills Library</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <style>
     :root {
       --navy: #061b34;
@@ -583,22 +586,22 @@
         label: "Core",
         title: "Core Skills",
         icon: "box",
-        countLabel: "skills",
+        countLabel: "skill",
         description: "Real markdown skills available to add to an agent now."
       },
       optional: {
-        label: "Drafts",
-        title: "Drafts & Ideas",
+        label: "In Progress",
+        title: "In Progress",
         icon: "spark",
-        countLabel: "entries",
-        description: "In-progress skills and catalog-only ideas that are not default installs yet."
+        countLabel: "skill",
+        description: "Real markdown skills still being reviewed before default install."
       },
       all: {
         label: "All Entries",
         title: "All Entries",
         icon: "grid",
-        countLabel: "entries",
-        description: "Default installs plus drafts and catalog-only ideas."
+        countLabel: "entry",
+        description: "Core and in-progress markdown skills."
       }
     };
 
@@ -707,7 +710,7 @@
               <strong>
                 <span class="pack-icon" aria-hidden="true">${packIcon(pack.icon)}</span>
                 ${escapeHtml(pack.title)}
-                <span class="count">${count} ${escapeHtml(pack.countLabel)}</span>
+                <span class="count">${count} ${escapeHtml(countLabel(count, pack.countLabel))}</span>
               </strong>
               <p>${escapeHtml(pack.description)}</p>
             </span>
@@ -728,6 +731,11 @@
       return `<svg ${attrs}><path d="M21 8l-9-5-9 5 9 5 9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path><path d="M12 13v8"></path></svg>`;
     }
 
+    function countLabel(count, singular) {
+      if (count === 1) return singular;
+      return singular === "entry" ? "entries" : `${singular}s`;
+    }
+
     function renderInstall() {
       const selected = skillsForPack();
       const ready = selected.filter(isDefaultInstall);
@@ -738,15 +746,17 @@
 
     function buildScript(selected, ready) {
       const installerUrl = "https://raw.githubusercontent.com/dbalders/UCSD-Skills-Library/main/scripts/install-skills.sh";
-      const skillNames = ready
+      const installable = selected.filter((skill) => skill.skillPath);
+      const skillNames = installable
         .map((skill) => skill.name)
         .join(" ");
 
-      if (!skillNames) return "# No default-install skills are available for this selection yet.";
+      if (!skillNames) return "# No installable skill folders are available for this selection yet.";
 
-      if (ready.length === 1) return `curl -fsSL ${installerUrl} | SKILLS="${skillNames}" bash`;
+      if (installable.length === 1) return `curl -fsSL ${installerUrl} | SKILLS="${skillNames}" bash`;
 
-      return `curl -fsSL ${installerUrl} | GROUP="built" bash`;
+      const group = state.pack === "all" ? "all" : "core";
+      return `curl -fsSL ${installerUrl} | GROUP="${group}" bash`;
     }
 
     function buildPrompt(selected) {
