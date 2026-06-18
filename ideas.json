@@ -48,5 +48,34 @@
         "url": "skills/ucsd-data-classification/SKILL.md"
       }
     ]
+  },
+  {
+    "id": "ucsd-branding",
+    "name": "ucsd-branding",
+    "title": "UCSD Branding",
+    "description": "Apply UC San Diego's official visual identity (colors, typography, Decorator 5 page shell, logos, UI components) to web apps, email templates, or documents.",
+    "category": "Brand & Communications",
+    "status": "review",
+    "publicationStatus": "draft",
+    "tier": "experimental",
+    "owner": "AI Tools",
+    "updated": "2026-06-17",
+    "checklist": {
+      "definition": true,
+      "skillDraft": true,
+      "references": true,
+      "reviewed": false,
+      "published": false
+    },
+    "links": [
+      {
+        "label": "Skill",
+        "url": "skills/ucsd-branding/SKILL.md"
+      },
+      {
+        "label": "Reference: Decorator 5 Chrome",
+        "url": "skills/ucsd-branding/references/decorator5-chrome.md"
+      }
+    ]
   }
 ]

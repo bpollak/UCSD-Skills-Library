@@ -12,7 +12,7 @@ skills_for_group() {
       printf '%s\n' "tritonai-feedback"
       ;;
     all)
-      printf '%s\n' "tritonai-feedback ucsd-data-classification"
+      printf '%s\n' "tritonai-feedback ucsd-data-classification ucsd-branding"
       ;;
     *)
       echo "Unknown skill group: $1" >&2
@@ -33,6 +33,11 @@ skill_files() {
         "skills/ucsd-data-classification/references/handling-obligations.md" \
         "skills/ucsd-data-classification/references/protection-levels.md" \
         "skills/ucsd-data-classification/references/sources.md"
+      ;;
+    ucsd-branding)
+      printf '%s\n' \
+        "skills/ucsd-branding/SKILL.md" \
+        "skills/ucsd-branding/references/decorator5-chrome.md"
       ;;
     *)
       echo "Unknown skill: $1" >&2

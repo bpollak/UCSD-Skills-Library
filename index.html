@@ -755,8 +755,11 @@
 
       if (installable.length === 1) return `curl -fsSL ${installerUrl} | SKILLS="${skillNames}" bash`;
 
-      const group = state.pack === "all" ? "all" : "core";
-      return `curl -fsSL ${installerUrl} | GROUP="${group}" bash`;
+      if (state.pack === "core" || state.pack === "all") {
+        return `curl -fsSL ${installerUrl} | GROUP="${state.pack}" bash`;
+      }
+
+      return `curl -fsSL ${installerUrl} | SKILLS="${skillNames}" bash`;
     }
 
     function buildPrompt(selected) {

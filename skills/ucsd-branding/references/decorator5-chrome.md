@@ -1,0 +1,180 @@
+# Decorator 5 — Annotated Chrome & Component Reference
+
+Source: `https://cdn.ucsd.edu/cms/decorator-5/styles/base.min.css`
+Verified: June 2026
+
+If this file and the live CDN CSS disagree, the CDN wins — update this file.
+
+---
+
+## Full HTML skeleton
+
+```html
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Title — Site Name</title>
+
+  <link href="//cdn.ucsd.edu/cms/decorator-5/styles/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.ucsd.edu/cms/decorator-5/styles/base.min.css" rel="stylesheet">
+  <!-- Fonts: base.min.css imports Roboto from Google Fonts and Teko from the CDN (teko.css) automatically. No separate font link needed for Decorator 5 pages. -->
+</head>
+<body>
+
+<!-- HEADER: outer wrapper bg #2b92b9 -->
+<header class="layout-header">
+  <a class="sr-only" href="#main-content">Skip to main content</a>
+  <!-- TITLE BAND: white, 92px tall -->
+  <section class="layout-title" aria-label="Site Name">
+    <div class="layout-container container">
+      <!-- Site name: black, uppercase, 1.35rem, 1px letter-spacing -->
+      <a class="title-header title-header-large" href="/">Site Name</a>
+      <a class="title-header title-header-short" href="/">Short</a>
+      <!-- Campus logotype: image-replaced sprite, 229×65px, hidden <560px -->
+      <a class="title-logo" href="https://www.ucsd.edu">UC San Diego</a>
+    </div>
+  </section>
+</header>
+
+<!-- NAVBAR: bg #00629b, 50px tall -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <!-- Mobile hamburger -->
+      <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="#site-nav" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="site-nav">
+      <ul class="nav navbar-nav">
+        <!-- Active tab: border-bottom: 3px solid #ffcd00 — ONLY place Yellow appears -->
+        <li class="active"><a href="#">Page</a></li>
+        <li><a href="#">Another Page</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="layout-main" id="main-content" role="main">
+  <div class="container">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb breadcrumbs-list">
+      <li><a href="https://ucsd.edu">Home</a></li>
+      <li class="active">Current Page</li>
+    </ol>
+
+    <!-- h1: Teko SemiBold, #00629b -->
+    <h1 class="page-header">Page Title</h1>
+    <!-- Lead paragraph: Roboto 300, 21px -->
+    <p class="lead">Introductory paragraph.</p>
+
+    <!-- Body content here -->
+
+  </div>
+</main>
+
+<!-- FOOTER: bg #00629b (Blue, NOT navy), border-top: 1px solid #ccc -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <!-- Left: address + copyright + links -->
+      <div class="col-sm-8">
+        <p>
+          <span>UC San Diego 9500 Gilman Dr. La Jolla, CA 92093 (858) 534-2230</span><br>
+          <span>Copyright &copy; 2026 Regents of the University of California. All rights reserved.</span>
+        </p>
+        <!-- Links: white, underlined, pipe-separated via border-right: 1px solid #fff -->
+        <ul class="footer-links">
+          <li><a href="https://accessibility.ucsd.edu/">Accessibility</a></li>
+          <li><a href="https://ucsd.edu/about/privacy.html">Privacy</a></li>
+          <li><a href="https://ucsd.edu/about/terms-of-use.html">Terms of Use</a></li>
+        </ul>
+      </div>
+      <!-- Right: white UCSD wordmark, 158×30px -->
+      <div class="col-sm-4">
+        <img src="https://cdn.ucsd.edu/developer/decorator/5.0.2/img/ucsd-footer-logo-white.png"
+             alt="UC San Diego" class="img-responsive footer-logo" />
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.ucsd.edu/cms/decorator-5/scripts/jquery.min.js"></script>
+<script src="https://cdn.ucsd.edu/cms/decorator-5/scripts/bootstrap.min.js"></script>
+<script src="https://cdn.ucsd.edu/cms/decorator-5/scripts/vendor.min.js"></script>
+<script src="https://cdn.ucsd.edu/cms/decorator-5/scripts/base.min.js"></script>
+</body>
+</html>
+```
+
+---
+
+## Chrome colors (from base.min.css)
+
+| Element | Property | Value |
+|---|---|---|
+| `.layout-header` | background-color | `#2b92b9` |
+| `.layout-title` | background | `#fff` |
+| `.layout-title` | height | `92px` |
+| `.title-header` | color | `#000` |
+| `.title-header` | font-size | `1.35rem` |
+| `.title-header` | letter-spacing | `1px` |
+| `.title-header` | text-transform | `uppercase` |
+| `.title-logo` | width × height | `229px × 65px` |
+| `.navbar-default` | background-color | `#00629b` |
+| `.navbar-default` | min-height | `50px` |
+| `.navbar-default .active > a` | border-bottom | `3px solid #ffcd00` |
+| `.navbar-default li > a:hover` | background-color | `#004268` |
+| `.footer` | background-color | `#00629b` |
+| `.footer` | border-top | `1px solid #ccc` |
+| `.footer` | font-size | `90%` (~14.4px) |
+| `.footer-logo` | width × height | `158px × 30px` |
+| `.layout-container` | max-width | `1200px` (960px below 1200px viewport) |
+
+---
+
+## Kitchen sink components
+
+All 19 components — fetch live examples from the kitchen sink for exact markup.
+Base URL: `https://developer.ucsd.edu/design/v5-kitchen-sink/kitchen-sink/`
+
+| Component | URL path | Key classes |
+|---|---|---|
+| Alerts | `alerts.html` | `.alert .alert-{success\|info\|warning\|danger}`, `.alert-dismissable`, `.msg.alert`, `.msg.info`, `.styled` |
+| Badges | `badges.html` | `<span class="badge">` |
+| Breadcrumbs | `breadcrumbs.html` | `<ol class="breadcrumb breadcrumbs-list">`, `.active` on current page `<li>` |
+| Buttons | `buttons.html` | `.btn .btn-primary` (Blue), `.btn .btn-default` (Navy); sizes: `-lg -sm -xs`; `.btn-block`; `disabled` |
+| Button Dropdowns | `button_dropdowns.html` | `.btn-group`, `.dropdown-toggle[data-toggle="dropdown"]`, `.dropdown-menu` |
+| Code | `code.html` | `<code>` (inline), `<pre><code>` (block), `<kbd>`, `<samp>`, `<var>` |
+| Dropdowns | `dropdowns.html` | `.dropdown`, `.dropdown-menu`, `.dropdown-header`, `<li class="divider">`, `.disabled` |
+| Equal Column Layout | `equal_column_layout.html` | Bootstrap 3 grid: `.row .col-md-{n}` (12-column), `.equal-columns` |
+| Forms | `forms.html` | `.form-group`, `.form-control`, `.form-horizontal`, `.form-inline`; validation: `.has-{success\|warning\|error}`; `.help-block`; `<fieldset disabled>` |
+| Helper Classes | `helper_classes.html` | `.pull-{left\|right}`, `.center-block`, `.clearfix`, `.sr-only`, `.text-{left\|center\|right\|muted}`, `.bg-{primary\|success\|info\|warning\|danger}` |
+| Icons | `icons.html` | `<span class="glyphicon glyphicon-{name}">` — Bootstrap Glyphicons only; Font Awesome not included |
+| Images | `images.html` | `.img-responsive`, `.img-rounded`, `.img-circle`, `.img-thumbnail` |
+| Input Groups | `input_groups.html` | `.input-group`, `.input-group-addon`, `.input-group-btn`; sizes: `-lg -sm` |
+| JavaScript Components | `javascript_components.html` | Tabs (`.nav.nav-tabs`), modals (`.modal`), tooltips, popovers, collapse — all require Bootstrap JS |
+| Pagination | `pagination.html` | `<ul class="pagination">`, `<ul class="pager">`; `.active`, `.disabled`, `.previous`, `.next` |
+| Panels | `panels.html` | `.panel .panel-{default\|primary}`, `.panel-heading`, `.panel-body`, `.panel-title`; tables nest directly inside panels |
+| Progress Bars | `progress_bars.html` | `.progress > .progress-bar[role="progressbar"]`; variants: `-success -info -warning -danger`; `.progress-striped.active` for animated; `<span class="loading">` for indeterminate spinner |
+| Tables | `tables.html` | `.table`, `.table-{striped\|bordered\|hover\|condensed}`; wrap in `.table-responsive` for mobile scroll; row/cell context: `.active .success .info .warning .danger` |
+| Typography | `typography.html` | `.lead`, `.page-header`, `.list-unstyled`, `.list-inline`, `.dl-horizontal`, `<blockquote>`, `.blockquote-reverse`, `<address>`; external links get a window icon automatically; suppress with `.nonewwin` |
+
+---
+
+## Logo CDN URLs
+
+| Asset | URL |
+|---|---|
+| Header sprite 1x | `https://cdn.ucsd.edu/cms/decorator-5/styles/img/sprite_base.png` |
+| Header sprite 2x | `https://cdn.ucsd.edu/cms/decorator-5/styles/img/sprite_base2x.png` |
+| Footer wordmark (white) | `https://cdn.ucsd.edu/developer/decorator/5.0.2/img/ucsd-footer-logo-white.png` |
+| Teko font woff2 files | `https://cdn.ucsd.edu/cms/decorator-5/fonts/` |
+| Official logo downloads | https://brand.ucsd.edu (Visual Brand → Logos) |
