@@ -77,5 +77,38 @@
         "url": "skills/ucsd-branding/references/decorator5-chrome.md"
       }
     ]
+  },
+  {
+    "id": "ucsd-msgraph-calendar",
+    "name": "ucsd-msgraph-calendar",
+    "title": "UCSD Microsoft Graph Calendar",
+    "description": "Query Exchange/365 calendars via Microsoft Graph API using OAuth2 device code authentication. Use to check schedules, meetings, and availability across sessions with cached token refresh.",
+    "category": "Campus AI Tools",
+    "status": "built",
+    "publicationStatus": "draft",
+    "tier": "experimental",
+    "owner": "AI Tools",
+    "updated": "2026-06-18",
+    "checklist": {
+      "definition": true,
+      "skillDraft": true,
+      "references": true,
+      "reviewed": false,
+      "published": false
+    },
+    "links": [
+      {
+        "label": "Skill",
+        "url": "skills/ucsd-msgraph-calendar/SKILL.md"
+      },
+      {
+        "label": "Script",
+        "url": "skills/ucsd-msgraph-calendar/scripts/graph_auth.py"
+      },
+      {
+        "label": "Azure setup guide",
+        "url": "skills/ucsd-msgraph-calendar/references/azure-app-setup.md"
+      }
+    ]
   }
 ]
