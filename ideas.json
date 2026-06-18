@@ -110,5 +110,59 @@
         "url": "skills/ucsd-msgraph-calendar/references/azure-app-setup.md"
       }
     ]
+  },
+  {
+    "id": "ucsd-memory-create",
+    "name": "ucsd-memory-create",
+    "title": "UCSD Memory Create",
+    "description": "Create and maintain a local TritonAI memory vault with Obsidian-style Markdown notes, daily conversation sync jobs, and weekly cleanup jobs for TritonAI Code/OpenCode users.",
+    "category": "Knowledge & Documentation",
+    "status": "review",
+    "publicationStatus": "draft",
+    "tier": "experimental",
+    "owner": "AI Tools",
+    "updated": "2026-06-18",
+    "checklist": {
+      "definition": true,
+      "skillDraft": true,
+      "references": true,
+      "reviewed": false,
+      "published": false
+    },
+    "links": [
+      {
+        "label": "Skill",
+        "url": "skills/ucsd-memory-create/SKILL.md"
+      },
+      {
+        "label": "Reference: Scheduler Adapters",
+        "url": "skills/ucsd-memory-create/references/scheduler-adapters.md"
+      }
+    ]
+  },
+  {
+    "id": "ucsd-memory",
+    "name": "ucsd-memory",
+    "title": "UCSD Memory",
+    "description": "Use and maintain an existing local TritonAI memory vault: remember, search, cite, summarize, forget, correct, and check status for Obsidian-style Markdown memory notes.",
+    "category": "Knowledge & Documentation",
+    "status": "review",
+    "publicationStatus": "draft",
+    "tier": "experimental",
+    "owner": "AI Tools",
+    "updated": "2026-06-18",
+    "checklist": {
+      "definition": true,
+      "skillDraft": true,
+      "references": false,
+      "reviewed": false,
+      "published": false
+    },
+    "links": [
+      {
+        "label": "Skill",
+        "url": "skills/ucsd-memory/SKILL.md"
+      }
+    ]
   }
 ]
