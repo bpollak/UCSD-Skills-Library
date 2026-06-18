@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "UCSD Skills Library catalog (ideas.json)",
+  "title": "UCSD Skills Library generated catalog (ideas.json)",
   "type": "array",
   "items": {
     "type": "object",

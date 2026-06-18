@@ -514,7 +514,7 @@ Pull request:
 Review standard:
 - Treat README.md, CONTRIBUTING.md, GOVERNANCE.md, SECURITY.md, schema/ideas.schema.json, and .github/CODEOWNERS as authoritative.
 - Decide whether this PR is good to merge, needs fixes, or is blocked.
-- Check skill naming, SKILL.md frontmatter, ideas.json/catalog alignment, category validity, trigger specificity/collisions, trust tier/publication status, and source citations when applicable.
+- Check skill naming, SKILL.md frontmatter/catalog metadata, generated ideas.json freshness, category validity, trigger specificity/collisions, trust tier/publication status, and source citations when applicable.
 - Review security risk in skill instructions, scripts, assets, external URLs, network behavior, secrets, P3/P4 data, obfuscation, and tool permissions.
 - Use the automated command output below as evidence, but inspect the working tree and diff yourself where needed.
 - Do not modify files. Do not approve unsafe changes just because automated checks pass.

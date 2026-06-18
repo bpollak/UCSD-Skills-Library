@@ -1,6 +1,18 @@
 ---
 name: tritonai-feedback
 description: Use when a user wants to send feedback, bug reports, support requests, improvement ideas, or agent-experience notes to the TritonAI team. Trigger on explicit requests such as /tritonai, /feedback, /feed-back, /feed back, TritonAI feedback, email TritonAI, report this to TritonAI, or send this to tritonai@ucsd.edu.
+catalog:
+  title: TritonAI Feedback
+  description: >-
+    Collect feedback, bug reports, support requests, and improvement ideas from
+    coding-agent users, then draft or send them to tritonai@ucsd.edu with
+    confirmation.
+  category: Campus AI Tools
+  status: done
+  publicationStatus: draft
+  tier: core
+  owner: AI Tools
+  updated: 2026-05-13
 ---
 
 # TritonAI Feedback

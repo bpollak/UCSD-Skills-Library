@@ -1,6 +1,18 @@
 ---
 name: ucsd-memory-create
 description: Create and maintain a local TritonAI memory vault. Use when a user asks for $memory-create, memory setup, an Obsidian-style memory graph, daily conversation sync, weekly memory cleanup, or cross-platform background memory jobs for TritonAI Code/OpenCode.
+catalog:
+  title: UCSD Memory Create
+  description: >-
+    Create and maintain a local TritonAI memory vault with Obsidian-style
+    Markdown notes, daily conversation sync jobs, and weekly cleanup jobs for
+    TritonAI Code/OpenCode users.
+  category: Knowledge & Documentation
+  status: review
+  publicationStatus: draft
+  tier: experimental
+  owner: AI Tools
+  updated: 2026-06-18
 ---
 
 # UCSD Memory Create

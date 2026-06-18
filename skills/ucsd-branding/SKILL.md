@@ -1,6 +1,18 @@
 ---
 name: ucsd-branding
 description: Apply UC San Diego's official visual identity to a web app, email template, or document. Use when asked to brand a UI as UC San Diego / UCSD, apply campus branding, check brand compliance, or build anything that should look like a UCSD campus web property — including colors, typography, the Decorator 5 page shell, logos, and UI components. Trigger on phrases like "UCSD branding", "campus brand", "Decorator 5", "make it look like UCSD", or "UC San Diego style".
+catalog:
+  title: UCSD Branding
+  description: >-
+    Apply UC San Diego's official visual identity (colors, typography, Decorator
+    5 page shell, logos, UI components) to web apps, email templates, or
+    documents.
+  category: Brand & Communications
+  status: review
+  publicationStatus: draft
+  tier: experimental
+  owner: AI Tools
+  updated: 2026-06-17
 allowed-tools: WebFetch, Read, Write, Edit
 ---
 

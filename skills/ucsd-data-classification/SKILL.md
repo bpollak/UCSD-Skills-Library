@@ -1,6 +1,19 @@
 ---
 name: ucsd-data-classification
 description: Use when building or reviewing a UC San Diego application, automation, script, database, API, or data pipeline that stores, transmits, logs, or displays data — to classify that data under UC's IS-3 Protection Levels (P1–P4) and apply the handling controls each level requires. Trigger when defining data models or database schemas, choosing where to store data, writing logging, building forms or endpoints that collect personal/financial/health/student data, or whenever fields like SSN, credit card, PHI, FERPA student records, passwords, API keys, or other PII appear. Also /ucsd-data-classification, "classify this data", "what protection level", "can I store this", "is this allowed at UCSD".
+catalog:
+  title: UCSD Data Classification & Handling
+  description: >-
+    Classify data in UC San Diego apps, automations, and pipelines under UC IS-3
+    Protection Levels (P1-P4) and apply required handling controls, catching
+    issues like SSNs in unprotected paths, PII in logs, or unencrypted P4
+    storage.
+  category: Security & Data Protection
+  status: in-progress
+  publicationStatus: draft
+  tier: experimental
+  owner: AI Tools
+  updated: 2026-06-02
 ---
 
 # UCSD Data Classification & Handling

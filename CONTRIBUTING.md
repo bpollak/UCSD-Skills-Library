@@ -7,15 +7,16 @@ tiers and [SECURITY.md](SECURITY.md) for the threat model.
 
 ## The flow
 
-1. **Propose first.** Add an entry to `ideas.json` with `status: "planned"` describing
-   the skill. This is the dedup gate before anyone invests in building it.
+1. **Propose first.** Add `skills/<name>/SKILL.md` from the template with
+   `catalog.status: "planned"` or `catalog.status: "idea"`. This is the dedup gate
+   before anyone invests in building it.
 2. **Claim and build.** On a feature branch, create `skills/<name>/` from
-   [`skills/_template/`](skills/_template/). Update the `ideas.json` entry as you go.
+   [`skills/_template/`](skills/_template/). Update that skill's frontmatter as you go.
 3. **Validate locally** and open a PR.
 4. **Review.** A maintainer reviews against the checklist. Skills shipping `scripts/` or
    making network calls also get a security review routed by `CODEOWNERS`.
-5. **Merge.** On merge, update `publicationStatus`, `tier`, and
-   `checklist.published` as appropriate.
+5. **Merge.** On merge, update `catalog.publicationStatus` and `catalog.tier` as
+   appropriate.
 
 ## Skill layout
 
@@ -33,9 +34,9 @@ Only `SKILL.md` is required. Keep long tables, policy excerpts, and examples in
 ## Conventions
 
 - **Naming:** lowercase, hyphenated, and namespaced. UCSD-wide skills use the `ucsd-`
-  prefix; the folder name must equal the frontmatter `name` and the catalog `name`/`id`.
-- **Frontmatter is minimal:** only `name` and `description` are required. Rich metadata
-  such as category, status, publication state, and tier lives in `ideas.json`.
+  prefix; the folder name must equal the frontmatter `name`.
+- **Frontmatter is the catalog source:** `name`, trigger `description`, and the nested
+  `catalog` block drive the generated `ideas.json`.
 - **`description` is the trigger.** Write it to state exactly when the agent should use
   the skill. Avoid wording that overlaps another skill's triggers.
 - **One skill, one job.** If your idea extends an existing skill, extend it rather than
@@ -49,14 +50,18 @@ Only `SKILL.md` is required. Keep long tables, policy excerpts, and examples in
 
 ## Catalog rules
 
-- `ideas.json` must be valid JSON.
-- Every entry must have a stable, matching `id` and `name`.
-- `status` must be one of `planned`, `idea`, `in-progress`, `review`, `done`, or `built`.
-- `publicationStatus` must be one of `draft`, `ready`, `published`, or `archived`.
-- `tier` must be one of `core`, `verified`, or `experimental`.
-- `category` must match one of the names in `categories.json`.
-- Entries marked `done` or `built` must have a matching folder under `skills/`.
-- Every real skill folder must have a matching `ideas.json` entry.
+- Do not edit `ideas.json` by hand; it is generated from `SKILL.md` frontmatter.
+- Ordinary skill PRs should leave `ideas.json` alone unless the PR is specifically
+  refreshing the dashboard artifact.
+- Every real skill folder must include `name`, trigger `description`, and a `catalog`
+  block in `SKILL.md`.
+- `catalog.status` must be one of `planned`, `idea`, `in-progress`, `review`, `done`,
+  or `built`.
+- `catalog.publicationStatus` must be one of `draft`, `ready`, `published`, or
+  `archived`.
+- `catalog.tier` must be one of `core`, `verified`, or `experimental`.
+- `catalog.category` must match one of the names in `categories.json`.
+- `id` and `name` in the generated catalog come from the skill folder/frontmatter name.
 
 The `_template` folder is documentation and is ignored by validation as a skill.
 
@@ -64,6 +69,7 @@ The `_template` folder is documentation and is ignored by validation as a skill.
 
 ```sh
 pip install pyyaml jsonschema      # one-time
+python3 scripts/build_catalog.py --check  # optional dashboard artifact freshness check
 python3 scripts/validate.py        # structure + catalog + trigger collisions
 python3 scripts/security_scan.py   # secret gate + advisory security review
 ```
@@ -81,4 +87,4 @@ requesting review.
 - [ ] Instruction text contains nothing that would steer an agent to exfiltrate data,
       disable safety, escalate privileges, or contact unexpected endpoints.
 - [ ] `allowed-tools`, if present, is minimal; sources are cited and dated.
-- [ ] `ideas.json` entry is present, valid, and tier is appropriate.
+- [ ] `catalog` frontmatter is present, valid, and tier is appropriate.

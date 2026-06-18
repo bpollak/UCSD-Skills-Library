@@ -6,7 +6,9 @@ This repository catalogs UC San Diego skills for use and distribution with AI co
 
 ## Dashboard
 
-Open `index.html` through a local web server so it can read `ideas.json`:
+From the repo root, open `index.html` through a local web server so it can read
+the generated `ideas.json`. Do not open the file directly with `file://`; the
+browser fetch for `ideas.json` may be blocked.
 
 ```sh
 python3 -m http.server 8791 --bind 127.0.0.1
@@ -29,11 +31,22 @@ Use `skills/_template/` when starting a new skill.
 
 ## Catalog
 
-`ideas.json` is the source of truth for skill metadata. Categories live in `categories.json` and are used by the dashboard. Every catalog entry also carries a trust `tier`:
+Each skill's `SKILL.md` frontmatter is the source of truth for catalog metadata. The generated `ideas.json` file is kept for the static dashboard. Categories live in `categories.json` and are used by the dashboard. Every catalog entry also carries a trust `tier`:
 
 - **core** - team-built and fully vetted
 - **verified** - community-contributed, reviewed, and CI-green
 - **experimental** - clearly labeled, use-at-your-own-risk
+
+Regenerate the dashboard catalog when you need to refresh the checked-in dashboard
+artifact:
+
+```sh
+python3 scripts/build_catalog.py
+```
+
+Ordinary skill PRs should not edit `ideas.json` by hand; it is safe to leave the
+generated artifact untouched unless the PR is specifically refreshing the dashboard
+catalog.
 
 See [GOVERNANCE.md](GOVERNANCE.md) for how tiers are assigned.
 
@@ -49,7 +62,7 @@ The installer copies skill folders into `~/.agents/skills/` by default. To insta
 
 ## Contributing
 
-Contribution is open; publication is reviewed. Propose a skill in `ideas.json`, build it from [`skills/_template/`](skills/_template/), and open a PR. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+Contribution is open; publication is reviewed. Propose or build a skill by creating `skills/<name>/SKILL.md` from [`skills/_template/`](skills/_template/). See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
 ## Validation
 
@@ -61,4 +74,4 @@ python3 scripts/validate.py        # structure, schema, categories, catalog, tri
 python3 scripts/security_scan.py   # secret gate + advisory security review
 ```
 
-`ideas.json` is validated against [`schema/ideas.schema.json`](schema/ideas.schema.json).
+The generated catalog is validated against [`schema/ideas.schema.json`](schema/ideas.schema.json). If `ideas.json` is stale, validation reports a warning; run `python3 scripts/build_catalog.py` to refresh it.

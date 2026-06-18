@@ -1,6 +1,18 @@
 ---
 name: ucsd-memory
 description: Use and maintain an existing local TritonAI memory vault. Trigger on $memory, remember this, forget this, search memory, what do we know about, summarize this into memory, memory status, or requests to add, update, remove, query, or cite Obsidian-style TritonAI memory notes.
+catalog:
+  title: UCSD Memory
+  description: >-
+    Use and maintain an existing local TritonAI memory vault: remember, search,
+    cite, summarize, forget, correct, and check status for Obsidian-style
+    Markdown memory notes.
+  category: Knowledge & Documentation
+  status: review
+  publicationStatus: draft
+  tier: experimental
+  owner: AI Tools
+  updated: 2026-06-18
 ---
 
 # UCSD Memory

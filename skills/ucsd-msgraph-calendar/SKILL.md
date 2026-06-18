@@ -6,6 +6,18 @@ description: |
   availability. Trigger on: "my calendar", "what meetings", "today's schedule",
   "what am I doing", "check calendar", "am I free", "meeting with", "calendar",
   "schedule", "agenda", "this afternoon", "this week", "appointment".
+catalog:
+  title: UCSD Microsoft Graph Calendar
+  description: >-
+    Query Exchange/365 calendars via Microsoft Graph API using OAuth2 device code
+    authentication. Use to check schedules, meetings, and availability across
+    sessions with cached token refresh.
+  category: Campus AI Tools
+  status: built
+  publicationStatus: draft
+  tier: experimental
+  owner: AI Tools
+  updated: 2026-06-18
 allowed-tools: Read, Bash, WebFetch
 ---
 

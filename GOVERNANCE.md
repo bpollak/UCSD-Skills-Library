@@ -5,8 +5,8 @@ principle: **contribution is open; publication is earned; risk is always labeled
 
 ## Trust tiers
 
-Every skill carries a `tier` in `ideas.json`, surfaced in the storefront so users can
-calibrate trust.
+Every skill carries a `catalog.tier` in `SKILL.md` frontmatter, surfaced in the
+storefront so users can calibrate trust.
 
 | Tier | Meaning | Who maintains | Bar to publish |
 |---|---|---|---|
@@ -35,14 +35,15 @@ verified) after it matures.
 
 ## Lifecycle
 
-1. **Idea** — proposed in `ideas.json` (`status: idea`); deduped before any building.
+1. **Idea** — proposed in `skills/<name>/SKILL.md` (`catalog.status: idea`); deduped
+   before any building.
 2. **In progress** — being built on a branch.
 3. **Done / published** — merged, reviewed, tier assigned.
 4. **Deprecated** — superseded or stale skills are retired during periodic audits
    (`publicationStatus: draft` or entry removed) so the catalog doesn't rot.
 
-`ideas.json` is the single source of truth for the roadmap and catalog; the dashboard
-(`index.html`) renders it.
+`SKILL.md` frontmatter is the single source of truth for the roadmap and catalog.
+`ideas.json` is generated for the static dashboard (`index.html`).
 
 ## Keeping the catalog clean
 

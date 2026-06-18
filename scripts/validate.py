@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from build_catalog import build_catalog, configure_root as configure_catalog_root, render_catalog
+
 
 ROOT = Path(__file__).resolve().parents[1]
 IDEAS_PATH = ROOT / "ideas.json"
@@ -49,6 +51,7 @@ def configure_root(root: Path) -> None:
     CATEGORIES_PATH = ROOT / "categories.json"
     SCHEMA_PATH = ROOT / "schema" / "ideas.schema.json"
     SKILLS_DIR = ROOT / "skills"
+    configure_catalog_root(ROOT)
 
 
 def parse_args() -> argparse.Namespace:
@@ -344,7 +347,7 @@ def validate_skill_folders(catalog: dict[str, dict[str, Any]], errors: list[str]
             descriptions[name] = description
 
         if name not in catalog:
-            errors.append(f"skills/{name} has no matching entry in ideas.json")
+            errors.append(f"skills/{name} has no matching entry in the generated catalog")
 
     return descriptions
 
@@ -376,13 +379,28 @@ def main() -> int:
 
     validate_schema_file(errors)
     categories = load_json(CATEGORIES_PATH, errors)
-    ideas = load_json(IDEAS_PATH, errors)
 
     category_names = validate_categories(categories, errors) if categories is not None else set()
-    validate_schema(ideas, errors, warnings) if ideas is not None else None
-    catalog = validate_ideas(ideas, category_names, errors) if ideas is not None else {}
+
+    try:
+        ideas = build_catalog()
+    except Exception as exc:
+        errors.append(f"generated catalog failed: {exc}")
+        ideas = []
+
+    validate_schema(ideas, errors, warnings)
+    catalog = validate_ideas(ideas, category_names, errors)
     descriptions = validate_skill_folders(catalog, errors)
     validate_trigger_collisions(descriptions, warnings)
+
+    checked_in_ideas = load_json(IDEAS_PATH, errors)
+    if checked_in_ideas is not None:
+        validate_schema(checked_in_ideas, errors, warnings)
+        try:
+            if IDEAS_PATH.read_text(encoding="utf-8") != render_catalog(ideas):
+                warnings.append("ideas.json is generated and stale; run python3 scripts/build_catalog.py")
+        except OSError as exc:
+            errors.append(f"Could not read ideas.json: {exc}")
 
     ci = args.ci
     for warning in warnings:
