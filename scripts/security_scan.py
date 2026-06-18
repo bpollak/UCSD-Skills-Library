@@ -13,6 +13,7 @@ natural-language instructions, which require human review (see SECURITY.md).
 Run locally:  python3 scripts/security_scan.py
 """
 import re
+import argparse
 import sys
 from pathlib import Path
 
@@ -49,7 +50,19 @@ TRUSTED = ("ucop.edu", "ucsd.edu", "policy.ucop.edu", "security.ucop.edu", "nist
 
 high: list[str] = []
 review: list[str] = []
-ci = "--ci" in sys.argv
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--ci", action="store_true", help="Emit GitHub Actions annotations")
+    parser.add_argument("--root", type=Path, default=ROOT, help="Repository root to scan")
+    return parser.parse_args()
+
+
+args = parse_args()
+ROOT = args.root.resolve()
+SKILLS = ROOT / "skills"
+ci = args.ci
 
 
 def emit(level: str, msg: str) -> None:
