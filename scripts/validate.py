@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -38,6 +39,23 @@ REQUIRED_IDEA_FIELDS = {
 }
 REQUIRED_CHECKLIST_FIELDS = {"definition", "skillDraft", "references", "reviewed", "published"}
 REQUIRED_CATEGORY_FIELDS = {"id", "name", "description", "examples"}
+
+
+def configure_root(root: Path) -> None:
+    global ROOT, IDEAS_PATH, CATEGORIES_PATH, SCHEMA_PATH, SKILLS_DIR
+
+    ROOT = root.resolve()
+    IDEAS_PATH = ROOT / "ideas.json"
+    CATEGORIES_PATH = ROOT / "categories.json"
+    SCHEMA_PATH = ROOT / "schema" / "ideas.schema.json"
+    SKILLS_DIR = ROOT / "skills"
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--ci", action="store_true", help="Emit GitHub Actions annotations")
+    parser.add_argument("--root", type=Path, default=ROOT, help="Repository root to validate")
+    return parser.parse_args()
 
 
 def load_json(path: Path, errors: list[str]) -> Any:
@@ -350,6 +368,9 @@ def validate_trigger_collisions(descriptions: dict[str, str], warnings: list[str
 
 
 def main() -> int:
+    args = parse_args()
+    configure_root(args.root)
+
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -363,7 +384,7 @@ def main() -> int:
     descriptions = validate_skill_folders(catalog, errors)
     validate_trigger_collisions(descriptions, warnings)
 
-    ci = "--ci" in sys.argv
+    ci = args.ci
     for warning in warnings:
         print(f"::warning:: {warning}" if ci else f"WARN  {warning}")
     for error in errors:

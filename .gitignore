@@ -12,3 +12,6 @@ __pycache__/
 venv/
 .mypy_cache/
 .ruff_cache/
+
+# Local PR review daemon state
+.codex-pr-reviewer/
