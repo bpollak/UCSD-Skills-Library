@@ -133,6 +133,10 @@ Key facts agents commonly get wrong:
   Bootstrap `.navbar-default .navbar-nav` tabs.
 - The mobile `MENU` label is not a loose sibling next to the toggle. It lives
   inside `.navbar-toggle` in `.mobile-nav-icon`, alongside `.mobile-nav-bars`.
+- The extra-small navbar UCSD wordmark is the white footer wordmark asset
+  loaded by Decorator 5, inside `.col-sm-4.pull-right.visible-xs-block` with
+  `img.img-responsive.header-logo`; do not resize or replace it with another
+  UC San Diego logo asset.
 - The outer `.layout-header` wrapper is `#2b92b9`; the white band is
   `.layout-title` inside it.
 - Icons are Bootstrap 3 Glyphicons and the social icons shown by the kitchen
