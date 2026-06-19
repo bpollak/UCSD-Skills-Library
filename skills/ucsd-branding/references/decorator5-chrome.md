@@ -1,9 +1,27 @@
 # Decorator 5 — Annotated Chrome & Component Reference
 
-Source: `https://cdn.ucsd.edu/cms/decorator-5/styles/base.min.css`
-Verified: June 2026
+Sources:
+
+- `https://developer.ucsd.edu/sitemap.xml`
+- `https://developer.ucsd.edu/index.html`
+- `https://developer.ucsd.edu/design/index.html`
+- `https://developer.ucsd.edu/design/decorator/index.html`
+- `https://developer.ucsd.edu/design/decorator/templates/index.html`
+- `https://developer.ucsd.edu/design/decorator/widgets/index.html`
+- `https://developer.ucsd.edu/design/decorator/getting-started/index.html`
+- `https://developer.ucsd.edu/design/decorator/getting-started/cms.html`
+- `https://developer.ucsd.edu/design/decorator/getting-started/tips.html`
+- `https://developer.ucsd.edu/design/decorator/getting-started/file-guide/index.html`
+- `https://developer.ucsd.edu/design/v5-kitchen-sink/kitchen-sink/index.html`
+- `https://cdn.ucsd.edu/cms/decorator-5/styles/base.min.css`
+
+Verified: June 19, 2026
 
 If this file and the live CDN CSS disagree, the CDN wins — update this file.
+
+The sitemap contains archive pages under `/design/archive/`. Treat those as
+historical Decorator 3/4 documentation, not current Decorator 5 behavior, unless
+the user explicitly asks for archived guidance.
 
 ---
 
@@ -42,18 +60,26 @@ If this file and the live CDN CSS disagree, the CDN wins — update this file.
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <!-- Mobile hamburger -->
-      <button type="button" class="navbar-toggle collapsed"
-              data-toggle="collapse" data-target="#site-nav" aria-expanded="false">
+      <!-- Mobile toggle: bars and MENU label both live inside the button -->
+      <button type="button" class="navbar-toggle"
+              data-toggle="offcanvas" data-target=".navmenu"
+              data-canvas="body" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+        <div class="col-sm-1 mobile-nav-bars">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </div>
+        <div class="col-sm-1 mobile-nav-icon">MENU</div>
       </button>
+      <div class="col-sm-4 pull-right visible-xs-block">
+        <img src="https://cdn.ucsd.edu/developer/decorator/5.0.2/img/ucsd-footer-logo-white.png"
+             alt="UC San Diego" class="img-responsive header-logo" />
+      </div>
     </div>
     <div class="collapse navbar-collapse" id="site-nav">
       <ul class="nav navbar-nav">
-        <!-- Active tab: border-bottom: 3px solid #ffcd00 — ONLY place Yellow appears -->
+        <!-- Active tab in .navbar-default: background #004268, no yellow underline -->
         <li class="active"><a href="#">Page</a></li>
         <li><a href="#">Another Page</a></li>
       </ul>
@@ -130,13 +156,150 @@ If this file and the live CDN CSS disagree, the CDN wins — update this file.
 | `.title-logo` | width × height | `229px × 65px` |
 | `.navbar-default` | background-color | `#00629b` |
 | `.navbar-default` | min-height | `50px` |
-| `.navbar-default .active > a` | border-bottom | `3px solid #ffcd00` |
+| `.navbar-default .active > a` | background-color | `#004268` |
+| `.layout-navbar .navbar-list > li.active > a` | border-bottom | `3px solid #ffcd00` |
 | `.navbar-default li > a:hover` | background-color | `#004268` |
+| `.navbar-toggle .mobile-nav-bars` | content | three `.icon-bar` spans inside the button |
+| `.navbar-toggle .mobile-nav-icon` | content | `MENU` text inside the button |
+| `.header-logo` | source | white UCSD wordmark image, visible on extra-small nav |
 | `.footer` | background-color | `#00629b` |
 | `.footer` | border-top | `1px solid #ccc` |
 | `.footer` | font-size | `90%` (~14.4px) |
 | `.footer-logo` | width × height | `158px × 30px` |
 | `.layout-container` | max-width | `1200px` (960px below 1200px viewport) |
+
+---
+
+## Current sitemap pages
+
+The active non-archive sitemap pages covered by this skill are:
+
+| Page | URL |
+|---|---|
+| Developer Home | `https://developer.ucsd.edu/index.html` |
+| Design | `https://developer.ucsd.edu/design/index.html` |
+| Decorator 5 | `https://developer.ucsd.edu/design/decorator/index.html` |
+| Templates | `https://developer.ucsd.edu/design/decorator/templates/index.html` |
+| Widgets | `https://developer.ucsd.edu/design/decorator/widgets/index.html` |
+| Getting Started | `https://developer.ucsd.edu/design/decorator/getting-started/index.html` |
+| CMS setup | `https://developer.ucsd.edu/design/decorator/getting-started/cms.html` |
+| HTML Tips | `https://developer.ucsd.edu/design/decorator/getting-started/tips.html` |
+| ZIP File Guide | `https://developer.ucsd.edu/design/decorator/getting-started/file-guide/index.html` |
+
+Top navigation on these pages also links to UCSD ITS Frontend - Vue, Kitchen
+Sink, Archive, and Developer Community. Those are navigation links; do not
+import external Vue, archive, or Atlassian content into this Decorator 5
+reference.
+
+---
+
+## Current sitemap additions
+
+### Developer Home
+
+The home page includes a carousel hero and secondary jumbotron band:
+
+| Element | Classes / details |
+|---|---|
+| Hero carousel | `.carousel.slide.jumbotron.jumbotron-hero.hm` |
+| Carousel inner | `.carousel-inner`, `.carousel-indicators`, `.item.active`, `.item` |
+| Hero media | `.first-slide` images |
+| Hero content | `.cr-item-container`, `.animated.fadeInUp`, `.rt-text-light` |
+| Hero buttons | `.btn.btn-lg.btn-default`, `.rt-btn-yellow` |
+| Controls | `.left.carousel-control`, `.right.carousel-control`, `glyphicon-pause`, `glyphicon-chevron-left`, `glyphicon-chevron-right` |
+| Secondary band | `.layout-container.row`, `.jumbotron.jumbotron-sand.overlay-glow-2` |
+
+Visible home headings are "Design", "Develop", and "Decorator Version 5".
+
+### Documentation shell
+
+Current documentation pages use the Decorator chrome plus:
+
+| Element | Classes / attributes |
+|---|---|
+| Breadcrumb | `<ol class="breadcrumb breadcrumbs-list" aria-label="Breadcrumb">` |
+| Main content | `section.main-section.pull-right`, labelled "Main Content" |
+| Sidebar | `section.sidebar-section`, `role="complementary"`, labelled "Sidebar" |
+| Logo figure | `figure`, `role="complementary"`, labelled "Logo" |
+| Sidebar nav | `article.main-content-nav`, `role="navigation"`, labelled "Sidebar Nav" |
+
+Current sidebar groups include Design, Decorator 5, and Getting Started.
+
+### Current documentation topics
+
+| Page | Visible topic |
+|---|---|
+| Decorator 5 | "Decorator Version 5"; "Overall goals of this version of Decorator:" |
+| Templates | "Decorator 5 Templates" |
+| Widgets | "Widgets" |
+| Getting Started | "Getting Started Using Decorator 5" |
+| CMS setup | "Decorator 5 for CMS Sites" |
+| HTML Tips | "HTML Tips for Decorator 5" |
+| ZIP File Guide | "ZIP file contents" |
+
+### Widgets
+
+The current Widgets page documents:
+
+- FullCalendar: Interactive calendar
+- DataTable: Sortable table
+- Wizard: Step-by-step instructions
+- MaxChar: Limit characters in a form field
+
+The page uses expandable drawer/accordion sections and "Expand All" links.
+Individual widget demos link into older `v4-kitchen-sink/widgets/...` paths;
+keep those as linked demos, not new current Decorator 5 rules.
+
+### Getting Started
+
+Non-CMS workflow:
+
+1. Download the ZIP file containing the Decorator 5 files.
+2. Review the ZIP contents.
+3. Choose the HTML file that corresponds to the template.
+4. Modify the HTML file.
+5. Consult the HTML file guide, HTML tips, and demo.
+6. Use the CMS-specific path for CMS sites.
+
+CMS page:
+
+- Direct CMS users to Workplace Technology Services.
+- Use the template page and standard CMS directions.
+- Refer to HTML Tips for formatting.
+
+ZIP File Guide folders:
+
+| Folder | Purpose |
+|---|---|
+| `kitchen-sink` | HTML files for kitchen-sink elements. |
+| `fonts` | Fonts used in Bootstrap and other scripts; do not remove or move. |
+| `img` | Page images; contains demo images. |
+| `scripts` | Page JavaScript; contains demo scripts; do not remove. |
+| `css` | Decorator CSS; do not store page images in its `img` subfolder. |
+
+ZIP File Guide template files:
+
+| File | Purpose |
+|---|---|
+| `blank-slate.html` | Blank Slate template |
+| `index.html` | Decorator 5 demo |
+| `three-column.html` | Three Columns template |
+| `two-column.html` | Two Columns template |
+| `homepage.html` | Homepage template |
+
+HTML Tips:
+
+- Avoid inline and in-page styling.
+- Do not use font tags.
+- Use tables for tabular data only.
+- Use proper semantic markup.
+- Use `<strong>` instead of `<b>`.
+- Use `<em>` instead of `<i>`.
+- Avoid `<br>` except legitimate address/name-title cases.
+- Use `id` attributes instead of named anchors.
+- Use double quotes for attributes.
+- Avoid dangling elements.
+- Use lowercase tags.
 
 ---
 

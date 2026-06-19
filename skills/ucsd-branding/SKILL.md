@@ -1,90 +1,102 @@
 ---
 name: ucsd-branding
-description: Apply UC San Diego's official visual identity to a web app, email template, or document. Use when asked to brand a UI as UC San Diego / UCSD, apply campus branding, check brand compliance, or build anything that should look like a UCSD campus web property — including colors, typography, the Decorator 5 page shell, logos, and UI components. Trigger on phrases like "UCSD branding", "campus brand", "Decorator 5", "make it look like UCSD", or "UC San Diego style".
+description: Apply the UC San Diego Developer/Decorator 5 visual system to web pages. Use when asked to match UCSD/UC San Diego web branding, campus page chrome, current Decorator 5 documentation pages, or the components shown in the official Decorator 5 kitchen sink. This skill is intentionally limited to current developer.ucsd.edu sitemap pages plus the linked Decorator 5 kitchen-sink examples.
 catalog:
   title: UCSD Branding
   description: >-
-    Apply UC San Diego's official visual identity (colors, typography, Decorator
-    5 page shell, logos, UI components) to web apps, email templates, or
-    documents.
+    Apply the UC San Diego Developer/Decorator 5 visual system from the current
+    developer.ucsd.edu sitemap and Decorator 5 kitchen-sink pages.
   category: Brand & Communications
   status: review
   publicationStatus: draft
   tier: experimental
   owner: AI Tools
-  updated: 2026-06-17
+  updated: 2026-06-19
 allowed-tools: WebFetch, Read, Write, Edit
 ---
 
-# UCSD Branding
+# UCSD Developer/Decorator 5 Branding
 
-Applies UC San Diego's official visual identity to web pages, apps, emails, and documents — steering to authoritative live sources rather than bundling static copies of assets.
+This skill is strict by design. It reflects only the current
+`developer.ucsd.edu` sitemap pages and the linked Decorator 5 kitchen-sink
+examples.
 
 ## When to use
 
-- Building or restyling a web page or app to match UCSD's visual identity
-- Checking whether colors, fonts, or page chrome are brand-compliant
-- Implementing the Decorator 5 page shell (header, navbar, footer)
-- Choosing the correct logo, font, color, or UI component for a campus-facing product
-- Producing an email template in UCSD brand style
+- Building or restyling a web page to match the UC San Diego Developer site
+- Implementing the Decorator 5 page shell: header, title band, navbar, content,
+  sidebar, and footer
+- Checking whether a page uses only currently documented Decorator 5 elements
+- Choosing a Bootstrap 3/Decorator component from the official kitchen sink
+
+Do not use this skill as a general UC San Diego brand manual. If the user asks
+for broader brand identity, logos, print typography, email, charts, dark mode,
+or non-Decorator application design, fetch the relevant current official source
+first and keep that separate from this Decorator 5 contract.
 
 ## How to use this skill
 
 ### 1. Fetch the live sources first
 
-Before writing any brand values from memory, fetch these. They are the ground truth — if anything in this skill conflicts with them, the live source wins.
+Before writing any values from memory, fetch these. If anything in this skill
+conflicts with the live site, the live site wins.
 
 | Source | URL |
 |---|---|
-| Brand guidelines (colors, typography, logo rules) | https://brand.ucsd.edu |
-| Decorator 5 overview | https://developer.ucsd.edu/design/decorator/index.html |
-| Kitchen sink (all components, live rendered) | https://developer.ucsd.edu/design/v5-kitchen-sink/kitchen-sink/index.html |
-| Getting started / file guide | https://developer.ucsd.edu/design/decorator/getting-started/index.html |
-| Templates (blank slate, homepage, two-column, three-column) | https://developer.ucsd.edu/design/decorator/templates/index.html |
+| Sitemap | `https://developer.ucsd.edu/sitemap.xml` |
+| Developer Home | `https://developer.ucsd.edu/index.html` |
+| Design | `https://developer.ucsd.edu/design/index.html` |
+| Decorator 5 overview | `https://developer.ucsd.edu/design/decorator/index.html` |
+| Templates | `https://developer.ucsd.edu/design/decorator/templates/index.html` |
+| Widgets | `https://developer.ucsd.edu/design/decorator/widgets/index.html` |
+| Getting Started | `https://developer.ucsd.edu/design/decorator/getting-started/index.html` |
+| CMS setup | `https://developer.ucsd.edu/design/decorator/getting-started/cms.html` |
+| HTML Tips | `https://developer.ucsd.edu/design/decorator/getting-started/tips.html` |
+| ZIP File Guide | `https://developer.ucsd.edu/design/decorator/getting-started/file-guide/index.html` |
+| Kitchen sink index | `https://developer.ucsd.edu/design/v5-kitchen-sink/kitchen-sink/index.html` |
 
-### 2. Apply the color palette
+The sitemap also lists archive pages under `/design/archive/`. Do not fold
+Decorator 3 or Decorator 4 archive elements into this Decorator 5 skill unless
+the user explicitly asks for archived guidance.
 
-**Core (Blue must be dominant in every external material):**
+### 2. Apply only the current sitemap/kitchen-sink surface
 
-| Name | Hex | Primary use |
-|---|---|---|
-| UC San Diego Blue | `#00629B` | Navbar bg, footer bg, buttons, links, focus rings — required dominant color |
-| UC San Diego Navy | `#182B49` | Body text, h2 headings, dark surfaces — use instead of black |
-| UC San Diego Yellow | `#FFCD00` | Active nav tab underline only; highlight on dark surfaces; never as text on white |
-| UC San Diego Gold | `#C69214` | Accent rules, decorative borders (PMS 1245) |
+Use these current Developer/Decorator elements:
 
-**Accent (secondary — never dominant):** Turquoise `#00C6D7`, Magenta `#D462AD`, Orange `#FC8900`, Green `#6E963B`, Citron `#F3E500`, Sand `#F5F0E6`
+- Developer page chrome: skip link, emergency container, optional login band,
+  white title band, blue navbar, offcanvas mobile nav, search toggle, content
+  container/sidebar layout, and blue footer.
+- Current documentation surfaces: Developer Home, Design, Decorator 5,
+  Templates, Widgets, Getting Started, CMS setup, HTML Tips, and ZIP File
+  Guide.
+- Typography and colors defined by the loaded Decorator CSS.
+- Bootstrap 3 components shown in the 19 linked kitchen-sink examples: alerts,
+  badges, breadcrumbs, buttons, button dropdowns, code, dropdowns, equal column
+  layout, forms, helper classes, icons, images, input groups, JavaScript
+  components, pagination, panels, progress bars, tables, and typography.
+- Assets loaded by the current site/kitchen sink, including UCSD header/footer
+  sprites, Glyphicons, Roboto, and Teko.
 
-**Neutrals:** Cool Gray `#747678` (darken to `#5D6066` for small muted text to pass WCAG AA), Stone `#B6B1A9`, White `#FFFFFF`
+Do not invent or infer guidance for:
 
-**Accessibility:** WCAG 2 Level AA — ≥ 4.5:1 contrast for normal text. Blue and Navy pass on white. Never use Yellow or Citron as text on light backgrounds.
+- shadcn/Tailwind theme token maps
+- dark mode
+- email templates
+- charts, heatmaps, data visualization ramps, or dashboards
+- React/Vue application architecture
+- non-sitemap or non-kitchen-sink page patterns
+- logos or marks not loaded by the current Decorator pages
 
-### 3. Apply typography
+### 3. Implement the Decorator 5 page shell
 
-There are two contexts: the **UC San Diego Brand Guidelines** (print, digital, signage) and **Decorator 5** (the campus web framework). They use different font stacks — apply the one that matches the medium.
+Load the real Decorator 5 styles and scripts unless the project has an explicit
+offline requirement.
 
-**Brand Guidelines (general materials):**
-- **Primary:** [Brix Sans](https://www.myfonts.com/collections/brix-sans-font-hvd-fonts) (licensed) — do not bundle without a MyFonts license
-- **Recommended alternate:** [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) (Google Fonts) — per the UC San Diego Brand Guidelines
-- **Headlines:** [Refrigerator Deluxe](https://fonts.adobe.com/fonts/refrigerator-deluxe) (Adobe Fonts) with [Teko](https://www.fontshare.com/fonts/teko) as the free substitute
-- **Serif:** Chronicle (licensed from typography.com)
-
-**Decorator 5 (web pages and apps using the campus framework):**
-- **Body / UI text:** [Roboto](https://fonts.google.com/specimen/Roboto) (weights 400, 700) — loaded by the Decorator 5 CDN via Google Fonts `@import`. This is the Decorator 5 implementation choice, not the brand-wide alternate.
-- **Display headings (h1/h2 only):** [Teko SemiBold weight 600](https://www.fontshare.com/fonts/teko) — loaded from the CDN's `teko.css`. h1 in Blue `#00629B`, h2 in Navy `#182B49`, `letter-spacing: 0.5px`, `line-height: 1.1`.
-- **Fallback stack:** `Roboto, Helvetica Neue, Helvetica, Arial, sans-serif`
-
-### 4. Implement the Decorator 5 page shell
-
-Load the real CDN assets — do not copy them locally unless the project has an explicit offline requirement.
-
-**Stylesheets (in `<head>`):**
 ```html
 <link href="//cdn.ucsd.edu/cms/decorator-5/styles/bootstrap.min.css" rel="stylesheet">
 <link href="//cdn.ucsd.edu/cms/decorator-5/styles/base.min.css" rel="stylesheet">
 ```
 
-**Scripts (end of `<body>`):**
 ```html
 <script src="https://cdn.ucsd.edu/cms/decorator-5/scripts/jquery.min.js"></script>
 <script src="https://cdn.ucsd.edu/cms/decorator-5/scripts/bootstrap.min.js"></script>
@@ -92,60 +104,111 @@ Load the real CDN assets — do not copy them locally unless the project has an 
 <script src="https://cdn.ucsd.edu/cms/decorator-5/scripts/base.min.js"></script>
 ```
 
-**Chrome stack — verified against `base.min.css` (June 2026):**
+Verified chrome stack:
 
+```text
+.layout-header      bg: #2b92b9
+  .layout-title     bg: #fff, height: 92px
+    .title-header   black uppercase site title, 1.35rem, 1px letter spacing
+    .title-logo     229x65 sprite link to ucsd.edu
+.navbar-default     bg: #00629b, white links
+  hover/open/active bg: #004268
+  active state: #004268 background, no yellow underline
+  mobile toggle: .mobile-nav-bars and .mobile-nav-icon MENU both inside button
+.layout-navbar .navbar-list
+  active underline: 3px solid #ffcd00 in that alternate Decorator nav pattern
+.layout-main        content area
+.main-section       primary content section
+.sidebar-section    complementary sidebar
+.main-content-nav   sidebar navigation
+.footer             bg: #00629b, white links/text, 158x30 footer logo
 ```
-.layout-header      bg: #2b92b9  (medium blue outer wrapper)
-  └─ .layout-title  bg: #fff, height: 92px
-       ├─ .title-header  color: #000, uppercase, 1.35rem, 1px letter-spacing (LEFT)
-       └─ .title-logo    229×65px sprite, image-replaced link to ucsd.edu (RIGHT)
-.navbar-default     bg: #00629b, min-height: 50px
-  └─ .active > a    border-bottom: 3px solid #ffcd00  ← ONLY place Yellow appears
-.layout-main        (content area)
-.footer             bg: #00629b, border-top: 1px solid #ccc
-  ├─ .col-sm-8      address + copyright + .footer-links (white, underlined, pipe-separated)
-  └─ .col-sm-4      .footer-logo white wordmark, 158×30px
-```
 
-**Key facts agents commonly get wrong:**
-- Footer is **Blue `#00629b`**, not navy
-- There is **no gold rule on the header band** — yellow `#ffcd00` appears only on the active nav tab
-- The outer `.layout-header` wrapper is `#2b92b9` (medium blue); the white band is `.layout-title` inside it
+Key facts agents commonly get wrong:
 
-See `references/decorator5-chrome.md` for the full annotated HTML skeleton and component list.
+- Footer is UCSD Blue `#00629b`, not navy.
+- There is no gold rule on the white title band.
+- The kitchen-sink `.navbar-default` active item is dark blue, not a yellow
+  underline. Do not put the `.layout-navbar .navbar-list` underline pattern on
+  Bootstrap `.navbar-default .navbar-nav` tabs.
+- The mobile `MENU` label is not a loose sibling next to the toggle. It lives
+  inside `.navbar-toggle` in `.mobile-nav-icon`, alongside `.mobile-nav-bars`.
+- The outer `.layout-header` wrapper is `#2b92b9`; the white band is
+  `.layout-title` inside it.
+- Icons are Bootstrap 3 Glyphicons and the social icons shown by the kitchen
+  sink; Font Awesome is not part of the current surface.
 
-### 5. Use logo assets from the CDN
+See `references/decorator5-chrome.md` for the annotated HTML skeleton,
+current sitemap additions, and kitchen-sink component inventory.
 
-Never redraw, recolor, or approximate logos — they are licensed assets.
+### 4. Use current sitemap additions
 
-| Asset | URL |
-|---|---|
-| Header sprite (1x) | `https://cdn.ucsd.edu/cms/decorator-5/styles/img/sprite_base.png` |
-| Header sprite (2x retina) | `https://cdn.ucsd.edu/cms/decorator-5/styles/img/sprite_base2x.png` |
-| Footer wordmark (white PNG) | `https://cdn.ucsd.edu/developer/decorator/5.0.2/img/ucsd-footer-logo-white.png` |
-| Official logo downloads (SVG/PNG) | https://brand.ucsd.edu → Visual Brand → Logos (campus login may be required) |
+The current non-archive sitemap pages add these elements beyond the kitchen
+sink index:
 
-Until official files are in the project, use a text wordmark: **"UC San Diego"** bold + unit name.
+- Developer Home carousel hero: `.carousel`, `.slide`, `.jumbotron`,
+  `.jumbotron-hero`, `.hm`, `.carousel-inner`, `.carousel-indicators`, `.item`,
+  `.carousel-control`, pause/previous/next controls, `rt-text-light`,
+  `rt-btn-yellow`, `.jumbotron-sand`, and `.overlay-glow-2`.
+- Documentation shell landmarks: breadcrumb list labelled "Breadcrumb",
+  `section` labelled "Main Content", complementary sidebar labelled "Sidebar",
+  complementary logo figure labelled "Logo", and navigation article labelled
+  "Sidebar Nav".
+- Current documentation topics: Getting Started, Widgets, Templates, ZIP File
+  Guide, Decorator 5 for CMS sites, and HTML Tips.
+- Current widgets: FullCalendar, DataTable, Wizard, and MaxChar. The page uses
+  drawer/accordion-style expandable sections and "Expand All" links.
+- ZIP File Guide folders: `kitchen-sink`, `fonts`, `img`, `scripts`, and `css`.
+- ZIP File Guide templates: `blank-slate.html`, `index.html`,
+  `three-column.html`, `two-column.html`, and `homepage.html`.
+- HTML Tips: avoid inline/in-page styling, avoid font tags, use tables only for
+  tabular data, use semantic markup, prefer `<strong>` over `<b>` and `<em>`
+  over `<i>`, avoid `<br>` except legitimate address/name-title cases, use
+  `id` instead of named anchors, use double-quoted attributes, avoid dangling
+  elements, and use lowercase tags.
 
-### 6. Use Decorator 5 components
+### 5. Use Decorator 5 kitchen-sink components
 
-Decorator 5 is Bootstrap 3 + UCSD brand overrides. For any component, fetch the live kitchen sink example at `https://developer.ucsd.edu/design/v5-kitchen-sink/kitchen-sink/<component>.html`. Available components: alerts, badges, breadcrumbs, buttons, button\_dropdowns, code, dropdowns, equal\_column\_layout, forms, helper\_classes, icons, images, input\_groups, javascript\_components, pagination, panels, progress\_bars, tables, typography.
+For component details, fetch the live example at:
 
-### 7. For emails
+`https://developer.ucsd.edu/design/v5-kitchen-sink/kitchen-sink/<component>.html`
 
-Use inline CSS only. Pattern: Sand `#F5F0E6` page bg → white card with `#E2DED5` border → Blue `#00629B` header strip → Navy `#182B49` headings → Blue `#00629B` buttons → `#747678` fine print → Roboto/Helvetica font stack.
+Available component pages:
+
+- `alerts.html`
+- `badges.html`
+- `breadcrumbs.html`
+- `buttons.html`
+- `button_dropdowns.html`
+- `code.html`
+- `dropdowns.html`
+- `equal_column_layout.html`
+- `forms.html`
+- `helper_classes.html`
+- `icons.html`
+- `images.html`
+- `input_groups.html`
+- `javascript_components.html`
+- `pagination.html`
+- `panels.html`
+- `progress_bars.html`
+- `tables.html`
+- `typography.html`
 
 ## Guardrails
 
-- **Never fabricate or approximate the UCSD logo** — use CDN assets or the text wordmark only
-- **Never use Yellow `#FFCD00` or Citron as text on white or light backgrounds** — fails WCAG AA
-- **Never set the footer to navy** — it is UCSD Blue `#00629b`
-- **Do not bundle Brix Sans** without confirming a MyFonts license is in place — use Source Sans 3 (Brand Guidelines) or Roboto (Decorator 5) instead depending on context
-- If the live brand.ucsd.edu or kitchen sink contradicts this skill, follow the live source and note the discrepancy
+- Follow the live `developer.ucsd.edu` pages over this static skill if they
+  differ.
+- Do not import archive page behavior into current Decorator 5 work.
+- Do not add non-sitemap components, colors, layouts, or frameworks and label
+  them as UCSD Decorator 5.
+- Do not fabricate or approximate UCSD logos; use only assets loaded by the
+  current Decorator pages or separately verified official logo downloads.
 
 ## Sources & currency
 
-- UC San Diego Brand Guidelines: https://brand.ucsd.edu — current as of June 2026
-- Decorator 5 CDN CSS (`base.min.css`): https://cdn.ucsd.edu/cms/decorator-5/styles/base.min.css — verified June 2026
-- Decorator 5 Kitchen Sink: https://developer.ucsd.edu/design/v5-kitchen-sink/ — verified June 2026
-- Full annotated chrome and component reference: `references/decorator5-chrome.md`
+- `https://developer.ucsd.edu/sitemap.xml` - verified June 19, 2026
+- Current non-archive Developer/Decorator pages - verified June 19, 2026
+- Decorator 5 Kitchen Sink - verified June 19, 2026
+- Decorator 5 CSS (`base.min.css`) - verified June 19, 2026
+- Full annotated reference: `references/decorator5-chrome.md`
