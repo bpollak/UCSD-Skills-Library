@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DEST="${DEST:-$HOME/.agents/skills}"
-RAW_BASE_URL="${RAW_BASE_URL:-https://raw.githubusercontent.com/dbalders/UCSD-Skills-Library/main}"
+RAW_BASE_URL="${RAW_BASE_URL:-https://raw.githubusercontent.com/bpollak/UCSD-Skills-Library/main}"
 GROUP="${GROUP:-core}"
 SKILLS="${SKILLS:-}"
 
@@ -12,7 +12,13 @@ skills_for_group() {
       printf '%s\n' "tritonai-feedback"
       ;;
     all)
-      printf '%s\n' "tritonai-feedback ucsd-data-classification ucsd-branding"
+      printf '%s\n' \
+        "tritonai-feedback" \
+        "ucsd-branding" \
+        "ucsd-data-classification" \
+        "ucsd-memory" \
+        "ucsd-memory-create" \
+        "ucsd-msgraph-calendar"
       ;;
     *)
       echo "Unknown skill group: $1" >&2
@@ -27,6 +33,11 @@ skill_files() {
       printf '%s\n' \
         "skills/tritonai-feedback/SKILL.md"
       ;;
+    ucsd-branding)
+      printf '%s\n' \
+        "skills/ucsd-branding/SKILL.md" \
+        "skills/ucsd-branding/references/decorator5-chrome.md"
+      ;;
     ucsd-data-classification)
       printf '%s\n' \
         "skills/ucsd-data-classification/SKILL.md" \
@@ -34,10 +45,22 @@ skill_files() {
         "skills/ucsd-data-classification/references/protection-levels.md" \
         "skills/ucsd-data-classification/references/sources.md"
       ;;
-    ucsd-branding)
+    ucsd-memory)
       printf '%s\n' \
-        "skills/ucsd-branding/SKILL.md" \
-        "skills/ucsd-branding/references/decorator5-chrome.md"
+        "skills/ucsd-memory/SKILL.md"
+      ;;
+    ucsd-memory-create)
+      printf '%s\n' \
+        "skills/ucsd-memory-create/SKILL.md" \
+        "skills/ucsd-memory-create/references/scheduler-adapters.md" \
+        "skills/ucsd-memory-create/assets/prompts/daily-sync.md" \
+        "skills/ucsd-memory-create/assets/prompts/weekly-cleanup.md"
+      ;;
+    ucsd-msgraph-calendar)
+      printf '%s\n' \
+        "skills/ucsd-msgraph-calendar/SKILL.md" \
+        "skills/ucsd-msgraph-calendar/references/azure-app-setup.md" \
+        "skills/ucsd-msgraph-calendar/scripts/graph_auth.py"
       ;;
     *)
       echo "Unknown skill: $1" >&2
