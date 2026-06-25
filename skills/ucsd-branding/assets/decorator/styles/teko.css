@@ -1,0 +1,47 @@
+/** * @license * * Font Family: Teko * Designed by: Manushi Parikh * URL: https://www.fontshare.com/fonts/teko * © 2023 Indian Type Foundry * * Font Styles: * Teko Variable(Variable font) * Teko Light * Teko Regular * Teko Medium * Teko Semi Bold * Teko Bold * */
+/** * This is a variable font * You can controll variable axes as shown below: * font-variation-settings: 'wght' 300.0;
+ * * available axes: * 'wght' (range from 300.0 to 700.0) */
+/* @font-face {
+	 font-family: 'Teko-Variable';
+	 src: url('../fonts/Teko-Variable.woff2') format('woff2'), url('../fonts/Teko-Variable.woff') format('woff'), url('../fonts/Teko-Variable.ttf') format('truetype');
+	 font-weight: 300 700;
+	 font-display: swap;
+	 font-style: normal;
+}
+ @font-face {
+	 font-family: 'Teko-Light';
+	 src: url('../fonts/Teko-Light.woff2') format('woff2'), url('../fonts/Teko-Light.woff') format('woff'), url('../fonts/Teko-Light.ttf') format('truetype');
+	 font-weight: 300;
+	 font-display: swap;
+	 font-style: normal;
+}
+ */
+ @font-face {
+	 font-family: 'Teko-Regular';
+	 src: url('https://cdn.ucsd.edu/cms/decorator-5/fonts/Teko-Regular.woff2') format('woff2'), url('https://qa-cdn.ucsd.edu/cms/decorator-5/fonts/Teko-Regular.woff') format('woff'), url('https://qa-cdn.ucsd.edu/cms/decorator-5/fonts/Teko-Regular.ttf') format('truetype');
+	 font-weight: 400;
+	 font-display: swap;
+	 font-style: normal;
+}
+ @font-face {
+	 font-family: 'Teko-Medium';
+	 src: url('https://cdn.ucsd.edu/cms/decorator-5/fonts/Teko-Medium.woff2') format('woff2'), url('https://qa-cdn.ucsd.edu/cms/decorator-5/fonts/Teko-Medium.woff') format('woff'), url('https://qa-cdn.ucsd.edu/cms/decorator-5/fonts/Teko-Medium.ttf') format('truetype');
+	 font-weight: 500;
+	 font-display: swap;
+	 font-style: normal;
+}
+ @font-face {
+	 font-family: 'Teko-SemiBold';
+	 src: url('https://cdn.ucsd.edu/cms/decorator-5/fonts/Teko-SemiBold.woff2') format('woff2'), url('https://qa-cdn.ucsd.edu/cms/decorator-5/fonts/Teko-SemiBold.woff') format('woff'), url('https://qa-cdn.ucsd.edu/cms/decorator-5/fonts/Teko-SemiBold.ttf') format('truetype');
+	 font-weight: 600;
+	 font-display: swap;
+	 font-style: normal;
+}
+/* @font-face {
+	 font-family: 'Teko-Bold';
+	 src: url('../fonts/Teko-Bold.woff2') format('woff2'), url('../fonts/Teko-Bold.woff') format('woff'), url('../fonts/Teko-Bold.ttf') format('truetype');
+	 font-weight: 700;
+	 font-display: swap;
+	 font-style: normal;
+}
+ */
