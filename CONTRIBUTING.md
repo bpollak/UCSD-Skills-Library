@@ -79,12 +79,41 @@ requesting review.
 
 ## Review checklist
 
-- [ ] Clear, single purpose; does not duplicate or conflict with an existing skill.
-- [ ] `description` triggers are specific and do not collide with other skills.
-- [ ] No secrets, credentials, keys, or real P3/P4 data committed.
-- [ ] `scripts/` reviewed line-by-line; no obfuscation, pipe-to-shell, or undisclosed
-      network calls. External URLs are justified.
-- [ ] Instruction text contains nothing that would steer an agent to exfiltrate data,
-      disable safety, escalate privileges, or contact unexpected endpoints.
-- [ ] `allowed-tools`, if present, is minimal; sources are cited and dated.
-- [ ] `catalog` frontmatter is present, valid, and tier is appropriate.
+Before opening a PR, run through this checklist. Items flagged with **(CI)** are
+checked automatically; the rest require manual verification.
+
+- [ ] **One skill, one PR.** Does not bundle changes to multiple skills or add
+      unrelated assets. If you need to update an existing skill alongside a new
+      one, submit separate PRs.
+- [ ] **Trigger description is distinct.** `description` wording does not overlap
+      with any existing skill's triggers (e.g. avoid "remember" or "what do we
+      know about" if `ucsd-memory` already uses those).
+- [ ] **No real-looking UCSD names or emails.** Use neutral placeholders
+      (`example.com`, `Jane Smith`, `recipient@example.com`) in all examples,
+      documentation, and test data.
+- [ ] **No secrets, credentials, keys, or real P3/P4 data committed.**
+- [ ] **`git diff --check` passes** — no trailing whitespace, no CRLF, no
+      whitespace errors in any file. Run this before committing.
+- [ ] **`scripts/` reviewed line-by-line;** no obfuscation, pipe-to-shell, or
+      undisclosed network calls. External URLs are justified and documented.
+- [ ] **Privacy & access claims match enforcement.** If the skill claims
+      script-enforced privacy, RBAC, or anonymization, the scripts must actually
+      enforce it (fail closed, not just warn). Otherwise remove the claims.
+- [ ] **Data handling notes are explicit.** If the skill touches email, calendar,
+      PII, or UCSD-classified data (P2/P3+), the guardrails must state the
+      classification and define what crosses boundaries.
+- [ ] **Asset bundles require provenance.** Any `assets/` directory with
+      third-party files must include:
+      - `SOURCE.md` with source URLs, version, and retrieval date
+      - License/redistribution rationale
+      - `checksums.sha256` with SHA-256 for every file (no stale references,
+        all checksums verified against committed files)
+- [ ] **`allowed-tools` is minimal.** Only list the tools the skill actually
+      needs. `Read, Bash` is preferred for policy-only skills; expand only as
+      necessary.
+- [ ] **Instruction text** contains nothing that would steer an agent to
+      exfiltrate data, disable safety, escalate privileges, or contact
+      unexpected endpoints.
+- [ ] **Catalog frontmatter** is present, valid, and tier is appropriate.
+- [ ] **Validation passes.** Run `python3 scripts/validate.py` locally and fix
+      all errors. **(CI)**
