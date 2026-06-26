@@ -1,0 +1,102 @@
+{
+  "skills": [
+    "tritonai-feedback",
+    "ucsd-branding",
+    "ucsd-data-classification",
+    "ucsd-memory",
+    "ucsd-memory-create",
+    "ucsd-msgraph-calendar"
+  ],
+  "categories": [
+    {
+      "id": "accessibility-compliance",
+      "name": "Accessibility & Compliance",
+      "description": "Skills that check accessibility, policy, risk, security-sensitive content, or other institutional compliance concerns.",
+      "examples": [
+        "WCAG and digital accessibility reviews",
+        "privacy or sensitive-data handling checks",
+        "policy-aware remediation guidance"
+      ]
+    },
+    {
+      "id": "security-data-protection",
+      "name": "Security & Data Protection",
+      "description": "Skills that classify, protect, audit, or remediate sensitive data and security-sensitive workflows.",
+      "examples": [
+        "UCSD data classification",
+        "P1-P4 handling guidance",
+        "secret and sensitive-data checks"
+      ]
+    },
+    {
+      "id": "brand-communications",
+      "name": "Brand & Communications",
+      "description": "Skills that help UC San Diego materials follow brand, tone, messaging, visual identity, and communications guidance.",
+      "examples": [
+        "brand review",
+        "web and email copy review",
+        "logo, color, and typography checks"
+      ]
+    },
+    {
+      "id": "campus-ai-tools",
+      "name": "Campus AI Tools",
+      "description": "Skills for TritonAI, coding-agent setup, campus AI tool selection, feedback, and user support workflows.",
+      "examples": [
+        "TritonAI feedback",
+        "agent setup help",
+        "model or tool routing guidance"
+      ]
+    },
+    {
+      "id": "data-workflows",
+      "name": "Data & Workflow Automation",
+      "description": "Skills for evaluating, designing, troubleshooting, or documenting data pipelines and operational automations.",
+      "examples": [
+        "workflow audits",
+        "API troubleshooting",
+        "automation intake and triage"
+      ]
+    },
+    {
+      "id": "knowledge-documentation",
+      "name": "Knowledge & Documentation",
+      "description": "Skills that organize, summarize, maintain, or improve internal knowledge, references, and documentation.",
+      "examples": [
+        "knowledge-base curation",
+        "reference cleanup",
+        "process documentation"
+      ]
+    },
+    {
+      "id": "business-operations",
+      "name": "Business Operations",
+      "description": "Skills for procurement, finance-adjacent workflows, approvals, service operations, and administrative process support.",
+      "examples": [
+        "procurement workflow help",
+        "business-process checklists",
+        "approval package preparation"
+      ]
+    },
+    {
+      "id": "meetings-projects",
+      "name": "Meetings & Projects",
+      "description": "Skills that turn meeting context, planning notes, and project discussions into useful follow-up work.",
+      "examples": [
+        "meeting-to-action-plan",
+        "project status drafting",
+        "stakeholder follow-up"
+      ]
+    },
+    {
+      "id": "engineering-support",
+      "name": "Engineering Support",
+      "description": "Skills for repository review, implementation guidance, code quality checks, release preparation, and developer workflows.",
+      "examples": [
+        "repo review",
+        "CI and release checks",
+        "developer workflow support"
+      ]
+    }
+  ]
+}
