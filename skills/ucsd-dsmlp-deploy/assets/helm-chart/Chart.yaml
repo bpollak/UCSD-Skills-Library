@@ -1,0 +1,11 @@
+apiVersion: v2
+name: ucsd-webapp
+description: >-
+  Template Helm chart for deploying a UCSD citizen-developer web app onto the
+  TritonAI DSMLP Kubernetes platform. Copy into your app repo, rename, and set
+  values. Deployment + Service + Ingress, optional PVC for the data directory,
+  all environment variables via values, arbitrary volumes/volumeMounts separate
+  from the PVC, and secrets referenced — never created — by the chart.
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

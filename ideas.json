@@ -54,6 +54,31 @@
     ]
   },
   {
+    "id": "ucsd-cms",
+    "name": "ucsd-cms",
+    "title": "UCSD CMS Authoring",
+    "description": "Navigate UC San Diego Hannon Hill Cascade CMS workflows for Blink and department sites, using official Blink training as the source of truth.",
+    "category": "Brand & Communications",
+    "status": "review",
+    "publicationStatus": "draft",
+    "tier": "experimental",
+    "owner": "AI Tools",
+    "updated": "2026-06-26",
+    "checklist": {
+      "definition": true,
+      "skillDraft": true,
+      "references": false,
+      "reviewed": false,
+      "published": false
+    },
+    "links": [
+      {
+        "label": "Skill",
+        "url": "skills/ucsd-cms/SKILL.md"
+      }
+    ]
+  },
+  {
     "id": "ucsd-data-classification",
     "name": "ucsd-data-classification",
     "title": "UCSD Data Classification & Handling",
@@ -87,6 +112,35 @@
       {
         "label": "Reference: Sources",
         "url": "skills/ucsd-data-classification/references/sources.md"
+      }
+    ]
+  },
+  {
+    "id": "ucsd-dsmlp-deploy",
+    "name": "ucsd-dsmlp-deploy",
+    "title": "UCSD DSMLP Deployment Packaging",
+    "description": "Package agent-built citizen-developer apps for TritonAI DSMLP hosting with template conventions, GitHub Actions container builds, and a handoff Helm chart.",
+    "category": "Engineering Support",
+    "status": "review",
+    "publicationStatus": "draft",
+    "tier": "experimental",
+    "owner": "AI Tools",
+    "updated": "2026-06-26",
+    "checklist": {
+      "definition": true,
+      "skillDraft": true,
+      "references": true,
+      "reviewed": false,
+      "published": false
+    },
+    "links": [
+      {
+        "label": "Skill",
+        "url": "skills/ucsd-dsmlp-deploy/SKILL.md"
+      },
+      {
+        "label": "Reference: Handoff Template",
+        "url": "skills/ucsd-dsmlp-deploy/references/handoff-template.md"
       }
     ]
   },
