@@ -1,28 +1,33 @@
 ---
 name: ucsd-branding
-description: Apply the UC San Diego Developer/Decorator 5 visual system to web pages. Use when asked to match UCSD/UC San Diego web branding, campus page chrome, current Decorator 5 documentation pages, or the components shown in the official Decorator 5 kitchen sink. This skill is intentionally limited to current developer.ucsd.edu sitemap pages plus the linked Decorator 5 kitchen-sink examples.
+description: Apply the TritonAI-flavored UC San Diego Decorator 5 visual system to web pages. Use when asked to match TritonAI, UCSD/UC San Diego web branding, campus page chrome, current TritonAI documentation pages, current Decorator 5 documentation pages, or the components shown in the official Decorator 5 kitchen sink. For TritonAI pages, the live tritonai.ucsd.edu site is the canonical styling source.
 catalog:
   title: UCSD Branding
   description: >-
-    Apply the UC San Diego Developer/Decorator 5 visual system from the current
-    developer.ucsd.edu sitemap and Decorator 5 kitchen-sink pages.
+    Apply the TritonAI-flavored UC San Diego Decorator 5 visual system from the
+    current tritonai.ucsd.edu pages, Developer/Decorator 5 docs, and Decorator 5
+    kitchen-sink pages.
   category: Brand & Communications
   status: review
   publicationStatus: draft
   tier: experimental
   owner: AI Tools
-  updated: 2026-06-19
+  updated: 2026-06-26
 allowed-tools: WebFetch, Read, Write, Edit
 ---
 
-# UCSD Developer/Decorator 5 Branding
+# UCSD TritonAI/Decorator 5 Branding
 
 This skill is strict by design. It reflects only the current
-`developer.ucsd.edu` sitemap pages and the linked Decorator 5 kitchen-sink
-examples.
+`tritonai.ucsd.edu` pages, current `developer.ucsd.edu` Decorator 5 pages, and
+the linked Decorator 5 kitchen-sink examples. For TritonAI properties and pages
+that live in the TritonAI ecosystem, the live TritonAI site is the canonical
+visual and layout source. Use Developer/Decorator 5 as the framework reference
+and component fallback, not as a reason to override TritonAI-specific styling.
 
 ## When to use
 
+- Building or restyling a web page to match the TritonAI site
 - Building or restyling a web page to match the UC San Diego Developer site
 - Implementing the Decorator 5 page shell: header, title band, navbar, content,
   sidebar, and footer
@@ -38,11 +43,18 @@ first and keep that separate from this Decorator 5 contract.
 
 ### 1. Fetch the live sources first
 
-Before writing any values from memory, fetch these. If anything in this skill
-conflicts with the live site, the live site wins.
+Before writing any values from memory, fetch the relevant live TritonAI page
+first. If a TritonAI page and Developer/Decorator 5 differ in spacing,
+navigation behavior, labels, or page composition, the live TritonAI page wins
+for TritonAI work.
 
 | Source | URL |
 |---|---|
+| TritonAI Home | `https://tritonai.ucsd.edu/index.html` |
+| TritonAI TritonGPT | `https://tritonai.ucsd.edu/tritongpt/index.html` |
+| TritonAI Training & Resources | `https://tritonai.ucsd.edu/training-resources/index.html` |
+| TritonAI Faculty AI Symposium | `https://tritonai.ucsd.edu/training-resources/faculty-ai-symposium.html` |
+| TritonAI Terms of Use | `https://tritonai.ucsd.edu/tritongpt/terms.html` |
 | Sitemap | `https://developer.ucsd.edu/sitemap.xml` |
 | Developer Home | `https://developer.ucsd.edu/index.html` |
 | Design | `https://developer.ucsd.edu/design/index.html` |
@@ -59,9 +71,26 @@ The sitemap also lists archive pages under `/design/archive/`. Do not fold
 Decorator 3 or Decorator 4 archive elements into this Decorator 5 skill unless
 the user explicitly asks for archived guidance.
 
-### 2. Apply only the current sitemap/kitchen-sink surface
+### 2. Apply TritonAI first, then current sitemap/kitchen-sink surface
 
-Use these current Developer/Decorator elements:
+For TritonAI pages and TritonAI-adjacent pages, match these live TritonAI
+patterns first:
+
+- Header, title band, top navbar, search, mobile menu, content container,
+  breadcrumbs, sidebar navigation, footer, and typography as rendered on
+  `tritonai.ucsd.edu`.
+- Section sidebar behavior from live TritonAI documentation pages. On mobile,
+  the sidebar appears after the main content near the footer. Its
+  `.main-content-nav` styling uses the compact TritonAI/Decorator treatment:
+  `16px` outer padding, compact `h2`, list rows that bleed to the nav border,
+  `16px` links, top-only separators, and the sand active row.
+- Top navigation active state from TritonAI pages: the active `.navbar-default`
+  item uses the dark blue background, not the yellow underline pattern.
+- TritonAI-specific labels, ordering, and section names from the live page being
+  matched.
+
+Use these current Developer/Decorator elements as the underlying component
+system and fallback reference:
 
 - Developer page chrome: skip link, emergency container, optional login band,
   white title band, blue navbar, offcanvas mobile nav, search toggle, content
@@ -84,7 +113,7 @@ Do not invent or infer guidance for:
 - email templates
 - charts, heatmaps, data visualization ramps, or dashboards
 - React/Vue application architecture
-- non-sitemap or non-kitchen-sink page patterns
+- non-TritonAI, non-sitemap, or non-kitchen-sink page patterns
 - logos or marks not loaded by the current Decorator pages
 
 ### 3. Implement the Decorator 5 page shell
@@ -143,7 +172,8 @@ Key facts agents commonly get wrong:
   sink; Font Awesome is not part of the current surface.
 
 See `references/decorator5-chrome.md` for the annotated HTML skeleton,
-current sitemap additions, and kitchen-sink component inventory.
+TritonAI-specific page-shell notes, current sitemap additions, and
+kitchen-sink component inventory.
 
 ### 4. Use current sitemap additions
 
@@ -201,8 +231,10 @@ Available component pages:
 
 ## Guardrails
 
-- Follow the live `developer.ucsd.edu` pages over this static skill if they
-  differ.
+- Follow the live `tritonai.ucsd.edu` page over this static skill for TritonAI
+  work if they differ.
+- Follow the live `developer.ucsd.edu` pages over this static skill for generic
+  Decorator 5 work if they differ.
 - Do not import archive page behavior into current Decorator 5 work.
 - Do not add non-sitemap components, colors, layouts, or frameworks and label
   them as UCSD Decorator 5.
@@ -211,6 +243,7 @@ Available component pages:
 
 ## Sources & currency
 
+- Current TritonAI pages - verified June 26, 2026
 - `https://developer.ucsd.edu/sitemap.xml` - verified June 19, 2026
 - Current non-archive Developer/Decorator pages - verified June 19, 2026
 - Decorator 5 Kitchen Sink - verified June 19, 2026

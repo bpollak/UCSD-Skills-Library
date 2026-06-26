@@ -2,6 +2,11 @@
 
 Sources:
 
+- `https://tritonai.ucsd.edu/index.html`
+- `https://tritonai.ucsd.edu/tritongpt/index.html`
+- `https://tritonai.ucsd.edu/training-resources/index.html`
+- `https://tritonai.ucsd.edu/training-resources/faculty-ai-symposium.html`
+- `https://tritonai.ucsd.edu/tritongpt/terms.html`
 - `https://developer.ucsd.edu/sitemap.xml`
 - `https://developer.ucsd.edu/index.html`
 - `https://developer.ucsd.edu/design/index.html`
@@ -15,9 +20,11 @@ Sources:
 - `https://developer.ucsd.edu/design/v5-kitchen-sink/kitchen-sink/index.html`
 - `https://cdn.ucsd.edu/cms/decorator-5/styles/base.min.css`
 
-Verified: June 19, 2026
+Verified: June 26, 2026
 
-If this file and the live CDN CSS disagree, the CDN wins — update this file.
+If this file and the live TritonAI site disagree for TritonAI work, the live
+TritonAI site wins. If this file and the live CDN CSS disagree for generic
+Decorator 5 work, the CDN wins. Update this file when either source changes.
 
 The sitemap contains archive pages under `/design/archive/`. Treat those as
 historical Decorator 3/4 documentation, not current Decorator 5 behavior, unless
@@ -139,6 +146,35 @@ the user explicitly asks for archived guidance.
 </body>
 </html>
 ```
+
+---
+
+## TritonAI canonical page shell
+
+For TritonAI properties, use live `tritonai.ucsd.edu` pages as the canonical
+styling and behavior source. The Developer/Decorator 5 pages document the
+underlying component system, but TritonAI pages determine the final spacing,
+navigation behavior, labels, and page composition.
+
+Important TritonAI patterns verified on live pages:
+
+| Element | TritonAI behavior |
+|---|---|
+| Header/title/nav/footer | Use the same Decorator 5 chrome, colors, assets, and typography described below. |
+| Top nav active state | `.navbar-default` active item uses dark blue `#004268`, not the yellow underline pattern. |
+| Breadcrumbs | `<ol class="breadcrumb breadcrumbs-list" aria-label="Breadcrumb">`; first item is `TritonAI`. |
+| Documentation sidebar | `section.col-xs-12.col-md-3.sidebar-section` with `role="complementary"` and `aria-label="Sidebar"`. |
+| Sidebar nav landmark | `article.main-content-nav` with `role="navigation"` and `aria-label="Sidebar Nav"`. |
+| Desktop sidebar placement | Sidebar appears left of main content at desktop widths. |
+| Mobile sidebar placement | Sidebar drops below the main content near the footer. |
+| Sidebar box | Border `1px solid #d8d7d7`, white background, `16px` padding, `16px` bottom margin. |
+| Sidebar heading | Compact `22.4px` bold Roboto heading, no heading divider rule, `8.96px` bottom margin. |
+| Sidebar list | Rows bleed through the nav padding to the border using negative horizontal margins. |
+| Sidebar rows | Top border only, `16px` link padding, `16px` font size, `24px` line height. |
+| Sidebar active row | Sand background `#f5f0e6`, bold text, no extra badge or custom marker. |
+
+When building a TritonAI Skills Library or another TritonAI-adjacent page, match
+the live TritonAI sidebar geometry before applying any custom local styles.
 
 ---
 
